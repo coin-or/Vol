@@ -1,0 +1,22 @@
+Prerequisites for installation:
+- must use gnu make
+- to make the documentation doxygen must be installed
+
+Targets are put in subdirectories, whose name is derived from the
+platform name (as returned by `uname`) and the optimization level
+(e.g., Linux-g).
+
+To build the library archive for the Volume Algorithm:
+  - read (and edit as needed) the top of the Makefile.
+  - 'make' (same as 'make install') to create the libvol.so (or
+    libvol.a) library archive in the target subdirectory and copies
+    the headers into InstallDir/include and the library into
+    InstallDir/lib.
+  - 'make doc' to create the html documentation of the classes in the
+    library and place them in doc/html.
+
+For a detailed description on how to use the Volume Algorithm library,
+read the documentation on the implementation for the uncapacitated
+facility location (ufl) problem in the doc subdirectory. To see the
+actual implementation of ufl check out the 'Examples' module.
+
