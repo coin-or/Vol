@@ -295,26 +295,26 @@ void
 VOL_problem::set_default_parm()
 {
    parm.lambdainit = 0.1;
-   parm.alphainit = 0.1;
-   parm.alphamin = 0.0001;
+   parm.alphainit = 0.01;
+   parm.alphamin = 0.001;
    parm.alphafactor = 0.5;
    parm.ubinit = DBL_MAX;
    parm.primal_abs_precision = 0.02;
    //   parm.primal_rel_precision = 0.01;
-   parm.gap_abs_precision = 1.0;
-   parm.gap_rel_precision = 0.01;
-   parm.granularity = .999;
+   parm.gap_abs_precision = 0.0;
+   parm.gap_rel_precision = 0.001;
+   parm.granularity = 0.0;
    parm.minimum_rel_ascent = 0.0001;
    parm.ascent_first_check = 500;
    parm.ascent_check_invl = 100;
    parm.maxsgriters = 2000;
    parm.printflag = 3;
    parm.printinvl = 50;
-   parm.heurinvl = 50;
+   parm.heurinvl = 100000000;
    parm.greentestinvl = 1;
-   parm.yellowtestinvl = 400;
+   parm.yellowtestinvl = 2;
    parm.redtestinvl = 10;
-   parm.alphaint = 50;
+   parm.alphaint = 80;
    parm.temp_dualfile = 0;
 }
    
@@ -567,24 +567,17 @@ double
 VOL_problem::readjust_target(const double oldtarget, const double lcost) const
 {
    double target = oldtarget;
-   if (target < -10.0 || target > 10.0) {
-      // nicely away from 0
-      if (lcost >= target - VolAbs(target) * 0.05) {
-	 if (lcost > -10.0 && lcost < 9.5) {
-	    target = 10.0;
-	 } else { 
-	    target += 0.025 * VolAbs(target);
-	    target = VolMax(target, lcost + 0.05 * VolAbs(lcost));
-	 }
+   if (lcost >= target - VolAbs(target) * 0.05) {
+      if (VolAbs(lcost) < 10.0) {
+	 target = 10.0;
+      } else { 
+	 target += 0.025 * VolAbs(target);
+	 target = VolMax(target, lcost + 0.05 * VolAbs(lcost));
       }
-   } else {
-      // near 0, must be careful
-      if (lcost > -10.0) {
-	 target = (lcost < 9.5) ? 10.0 : lcost * 1.05;
+      if (target != oldtarget && (parm.printflag & 2)) {
+	 printf("     **** readjusting target!!! new target = %f *****\n",
+		target);
       }
-   }
-   if (target != oldtarget && (parm.printflag & 2)) {
-      printf("     **** readjusting target!!! new target = %f *****\n",target);
    }
    return target;
 }
