@@ -6,7 +6,7 @@ LibType := SHARED
 # between then specify the exact level you want, e.g., -O1 or -O2
 OptLevel := -O
 
-LIBNAME := vol
+LIBNAME := Vol
 LIBSRC :=
 LIBSRC += VolVolume.cpp
 
