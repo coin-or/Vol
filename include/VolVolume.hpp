@@ -495,7 +495,7 @@ public:
 			const double alpha) {
       if (lcost == 0.0  ||  alpha < parm.alphamin)
 	 return 1.0;
-      const double x = (lcost - lastvalue) / abs(lcost);
+      const double x = (lcost - lastvalue) / VolAbs(lcost);
       lastvalue = lcost;
       return (x <= 0.01) ? parm.alphafactor : 1.0;
    }
