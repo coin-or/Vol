@@ -67,8 +67,7 @@ install: libvol
 	@mkdir -p ${InstallDir}/lib
 	@${CP} $(TARGETDIR)/libvol$(OptVersion)$(LIBEXT) ${InstallDir}/lib
 	@rm -f ${InstallDir}/lib/libvol$(LIBEXT)
-	@cd ${InstallDir}/lib; \
-		ln -s libvol$(OptVersion)$(LIBEXT) libvol$(LIBEXT)
+	@cd ${InstallDir}/lib; ${LN} libvol$(OptVersion)$(LIBEXT) libvol$(LIBEXT)
 
 ###############################################################################
 
