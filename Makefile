@@ -46,6 +46,11 @@ LIBOBJ := $(addprefix $(TARGETDIR)/, $(LIBSRC:.cpp=.o))
 LIBDEP := $(addprefix $(DEPDIR)/, $(LIBSRC:.cpp=.d))
 
 ###############################################################################
+# This one must be right before the rules
+
+include ${MakefileDir}/Makefile.rules
+
+###############################################################################
 
 .DELETE_ON_ERROR:
 
@@ -57,18 +62,12 @@ all:     libvol
 install: libvol
 	@echo "Installing include files..."
 	@mkdir -p ${InstallDir}/include
-	@cp include/VolVolume.hpp ${InstallDir}/include
+	@${CP} include/VolVolume.hpp ${InstallDir}/include
 	@echo "Installing libraries..."
 	@mkdir -p ${InstallDir}/lib
-	@cp $(TARGETDIR)/libvol$(OptVersion)$(LIBEXT) ${InstallDir}/lib
+	@${CP} $(TARGETDIR)/libvol$(OptVersion)$(LIBEXT) ${InstallDir}/lib
 	@rm -f ${InstallDir}/lib/libvol$(LIBEXT)
-	@cd ${InstallDir}/lib; \
-		ln -s libvol$(OptVersion)$(LIBEXT) libvol$(LIBEXT)
-
-
-###############################################################################
-
-include ${MakefileDir}/Makefile.rules
+	@cd ${InstallDir}/lib; ${LN} libvol$(OptVersion)$(LIBEXT) libvol$(LIBEXT)
 
 ###############################################################################
 
