@@ -29,12 +29,12 @@ export LibType OptLevel LIBNAME LIBSRC
 
 .DELETE_ON_ERROR:
 
-.PHONY: default install libosi library clean doc
+.PHONY: default install libVol library clean doc
 
 default: install
 
 install clean doc library: % :
 	$(MAKE) -f ${MakefileDir}/Makefile.lib $*
 
-libvol:
+libVol:
 	$(MAKE) -f ${MakefileDir}/Makefile.lib library
