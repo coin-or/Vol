@@ -7,6 +7,7 @@ LibType := SHARED
 OptLevel := -O
 
 LIBNAME := Vol
+
 LIBSRC :=
 LIBSRC += VolVolume.cpp
 
@@ -14,7 +15,8 @@ LIBSRC += VolVolume.cpp
 # You should not need to edit below this line.
 ##############################################################################
 # The location of the customized Makefiles
-export MakefileDir := ../Common/make
+export CoinDir = $(shell cd ..; pwd)
+export MakefileDir := $(CoinDir)/Makefiles
 include ${MakefileDir}/Makefile.coin
 include ${MakefileDir}/Makefile.location
 
