@@ -181,7 +181,7 @@ VOL_indc::VOL_indc(const VOL_dvector& dual_lb, const VOL_dvector& dual_ub,
       v2   += vstar[i] * vstar[i];
       asc  += v[i] * v[i];
       vu   -= vstar[i] * u[i];
-      vabs += abs(vstar[i]);
+      vabs += VolAbs(vstar[i]);
    }
    
    v2 = sqrt(v2) / nc;
@@ -482,11 +482,11 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
       // test terminating criteria
       const bool primal_feas = 
 	(pstar.viol < parm.primal_abs_precision);
-      const double gap = abs(pstar.value - dstar.lcost);
-      const bool small_gap = abs(dstar.lcost) < 0.0001 ?
+      const double gap = VolAbs(pstar.value - dstar.lcost);
+      const bool small_gap = VolAbs(dstar.lcost) < 0.0001 ?
 	(gap < parm.gap_abs_precision) :
 	( (gap < parm.gap_abs_precision) || 
-	  (gap/abs(dstar.lcost) < parm.gap_rel_precision) );
+	  (gap/VolAbs(dstar.lcost) < parm.gap_rel_precision) );
       
       // test optimality
       if (primal_feas && small_gap)
@@ -500,7 +500,7 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
       const int k = iter_ % parm.ascent_check_invl;
       if (iter_ > ascent_first_check) {
 	 if (dstar.lcost - lcost_sequence[k] <
-	     abs(lcost_sequence[k]) * parm.minimum_rel_ascent)
+	     VolAbs(lcost_sequence[k]) * parm.minimum_rel_ascent)
 	    break;
       }
       lcost_sequence[k] = dstar.lcost;
@@ -569,12 +569,12 @@ VOL_problem::readjust_target(const double oldtarget, const double lcost) const
    double target = oldtarget;
    if (target < -10.0 || target > 10.0) {
       // nicely away from 0
-      if (lcost >= target - abs(target) * 0.05) {
+      if (lcost >= target - VolAbs(target) * 0.05) {
 	 if (lcost > -10.0 && lcost < 9.5) {
 	    target = 10.0;
 	 } else { 
-	    target += 0.025 * abs(target);
-	    target = VolMax(target, lcost + 0.05 * abs(lcost));
+	    target += 0.025 * VolAbs(target);
+	    target = VolMax(target, lcost + 0.05 * VolAbs(lcost));
 	 }
       }
    } else {
