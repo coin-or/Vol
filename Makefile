@@ -24,6 +24,10 @@ MakefileDir := ../Common/make
 
 include ${MakefileDir}/Makefile.coin
 
+###############################################################################
+
+include ${MakefileDir}/Makefile.rules
+
 ##############################################################################
 
 CXXFLAGS += $(OPTFLAG)
@@ -64,11 +68,6 @@ install: libvol
 	@rm -f ${InstallDir}/lib/libvol$(LIBEXT)
 	@cd ${InstallDir}/lib; \
 		ln -s libvol$(OptVersion)$(LIBEXT) libvol$(LIBEXT)
-
-
-###############################################################################
-
-include ${MakefileDir}/Makefile.rules
 
 ###############################################################################
 
