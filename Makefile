@@ -24,10 +24,6 @@ MakefileDir := ../Common/make
 
 include ${MakefileDir}/Makefile.coin
 
-###############################################################################
-
-include ${MakefileDir}/Makefile.rules
-
 ##############################################################################
 
 CXXFLAGS += $(OPTFLAG)
@@ -48,6 +44,11 @@ VPATH := . : include : Junk : ${TARGETDIR} : ${DEPDIR}
 LIBSRC := VolVolume.cpp
 LIBOBJ := $(addprefix $(TARGETDIR)/, $(LIBSRC:.cpp=.o))
 LIBDEP := $(addprefix $(DEPDIR)/, $(LIBSRC:.cpp=.d))
+
+###############################################################################
+# This one must be right before the rules
+
+include ${MakefileDir}/Makefile.rules
 
 ###############################################################################
 
