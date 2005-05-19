@@ -404,7 +404,8 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
    VOL_dual dlast(dual); // set dlast=dual
 
    iter_ = 0;
-   print_info(iter_, primal, pstar, dual);
+   if (parm.printflag)
+     print_info(iter_, primal, pstar, dual);
 
    VOL_swing swing;
    VOL_alpha_factor alpha_factor;
@@ -456,7 +457,7 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
       if (swing.rd)
 	dual = dstar; // if there is no improvement reset dual=dstar
 
-      if (iter_ % parm.printinvl == 0) { // printing iteration information
+      if ((iter_ % parm.printinvl == 0) && parm.printflag) { // printing iteration information
 	 print_info(iter_, primal, pstar, dual);
 	 swing.print();
       }
@@ -507,7 +508,8 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
    }
    delete[] lcost_sequence;
 
-   print_info(iter_, primal, pstar, dual);
+   if (parm.printflag)
+     print_info(iter_, primal, pstar, dual);
    // set solution to return
    value = dstar.lcost;
    psol = pstar.x;
