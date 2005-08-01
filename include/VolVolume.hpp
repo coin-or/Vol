@@ -493,9 +493,10 @@ public:
 
    inline double factor(const VOL_parms& parm, const double lcost,
 			const double alpha) {
-      if (lcost == 0.0  ||  alpha < parm.alphamin)
+      if (alpha < parm.alphamin)
 	 return 1.0;
-      const double x = (lcost - lastvalue) / abs(lcost);
+      register const double ll = VolAbs(lcost);
+      const double x = ll > 10 ? (lcost-lastvalue)/ll : (lcost-lastvalue);
       lastvalue = lcost;
       return (x <= 0.01) ? parm.alphafactor : 1.0;
    }
@@ -555,6 +556,8 @@ public:
     for all hooks: return value of -1 means that volume should quit
 */
 class VOL_user_hooks {
+public:
+   virtual ~VOL_user_hooks() {}
 public:
    // for all hooks: return value of -1 means that volume should quit
    /** compute reduced costs    

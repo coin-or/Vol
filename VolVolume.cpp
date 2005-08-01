@@ -181,7 +181,7 @@ VOL_indc::VOL_indc(const VOL_dvector& dual_lb, const VOL_dvector& dual_ub,
       v2   += vstar[i] * vstar[i];
       asc  += v[i] * v[i];
       vu   -= vstar[i] * u[i];
-      vabs += abs(vstar[i]);
+      vabs += VolAbs(vstar[i]);
    }
    
    v2 = sqrt(v2) / nc;
@@ -295,26 +295,26 @@ void
 VOL_problem::set_default_parm()
 {
    parm.lambdainit = 0.1;
-   parm.alphainit = 0.1;
-   parm.alphamin = 0.0001;
+   parm.alphainit = 0.01;
+   parm.alphamin = 0.001;
    parm.alphafactor = 0.5;
    parm.ubinit = DBL_MAX;
    parm.primal_abs_precision = 0.02;
    //   parm.primal_rel_precision = 0.01;
-   parm.gap_abs_precision = 1.0;
-   parm.gap_rel_precision = 0.01;
-   parm.granularity = .999;
+   parm.gap_abs_precision = 0.0;
+   parm.gap_rel_precision = 0.001;
+   parm.granularity = 0.0;
    parm.minimum_rel_ascent = 0.0001;
    parm.ascent_first_check = 500;
    parm.ascent_check_invl = 100;
    parm.maxsgriters = 2000;
    parm.printflag = 3;
    parm.printinvl = 50;
-   parm.heurinvl = 50;
+   parm.heurinvl = 100000000;
    parm.greentestinvl = 1;
-   parm.yellowtestinvl = 400;
+   parm.yellowtestinvl = 2;
    parm.redtestinvl = 10;
-   parm.alphaint = 50;
+   parm.alphaint = 80;
    parm.temp_dualfile = 0;
 }
    
@@ -404,7 +404,8 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
    VOL_dual dlast(dual); // set dlast=dual
 
    iter_ = 0;
-   print_info(iter_, primal, pstar, dual);
+   if (parm.printflag)
+     print_info(iter_, primal, pstar, dual);
 
    VOL_swing swing;
    VOL_alpha_factor alpha_factor;
@@ -456,7 +457,7 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
       if (swing.rd)
 	dual = dstar; // if there is no improvement reset dual=dstar
 
-      if (iter_ % parm.printinvl == 0) { // printing iteration information
+      if ((iter_ % parm.printinvl == 0) && parm.printflag) { // printing iteration information
 	 print_info(iter_, primal, pstar, dual);
 	 swing.print();
       }
@@ -482,11 +483,11 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
       // test terminating criteria
       const bool primal_feas = 
 	(pstar.viol < parm.primal_abs_precision);
-      const double gap = abs(pstar.value - dstar.lcost);
-      const bool small_gap = abs(dstar.lcost) < 0.0001 ?
+      const double gap = VolAbs(pstar.value - dstar.lcost);
+      const bool small_gap = VolAbs(dstar.lcost) < 0.0001 ?
 	(gap < parm.gap_abs_precision) :
 	( (gap < parm.gap_abs_precision) || 
-	  (gap/abs(dstar.lcost) < parm.gap_rel_precision) );
+	  (gap/VolAbs(dstar.lcost) < parm.gap_rel_precision) );
       
       // test optimality
       if (primal_feas && small_gap)
@@ -500,14 +501,15 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
       const int k = iter_ % parm.ascent_check_invl;
       if (iter_ > ascent_first_check) {
 	 if (dstar.lcost - lcost_sequence[k] <
-	     abs(lcost_sequence[k]) * parm.minimum_rel_ascent)
+	     VolAbs(lcost_sequence[k]) * parm.minimum_rel_ascent)
 	    break;
       }
       lcost_sequence[k] = dstar.lcost;
    }
    delete[] lcost_sequence;
 
-   print_info(iter_, primal, pstar, dual);
+   if (parm.printflag)
+     print_info(iter_, primal, pstar, dual);
    // set solution to return
    value = dstar.lcost;
    psol = pstar.x;
@@ -567,24 +569,17 @@ double
 VOL_problem::readjust_target(const double oldtarget, const double lcost) const
 {
    double target = oldtarget;
-   if (target < -10.0 || target > 10.0) {
-      // nicely away from 0
-      if (lcost >= target - abs(target) * 0.05) {
-	 if (lcost > -10.0 && lcost < 9.5) {
-	    target = 10.0;
-	 } else { 
-	    target += 0.025 * abs(target);
-	    target = VolMax(target, lcost + 0.05 * abs(lcost));
-	 }
+   if (lcost >= target - VolAbs(target) * 0.05) {
+      if (VolAbs(lcost) < 10.0) {
+	 target = 10.0;
+      } else { 
+	 target += 0.025 * VolAbs(target);
+	 target = VolMax(target, lcost + 0.05 * VolAbs(lcost));
       }
-   } else {
-      // near 0, must be careful
-      if (lcost > -10.0) {
-	 target = (lcost < 9.5) ? 10.0 : lcost * 1.05;
+      if (target != oldtarget && (parm.printflag & 2)) {
+	 printf("     **** readjusting target!!! new target = %f *****\n",
+		target);
       }
-   }
-   if (target != oldtarget && (parm.printflag & 2)) {
-      printf("     **** readjusting target!!! new target = %f *****\n",target);
    }
    return target;
 }
