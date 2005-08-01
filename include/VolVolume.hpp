@@ -557,6 +557,8 @@ public:
 */
 class VOL_user_hooks {
 public:
+   virtual ~VOL_user_hooks() {}
+public:
    // for all hooks: return value of -1 means that volume should quit
    /** compute reduced costs    
        @param u (IN) the dual variables
