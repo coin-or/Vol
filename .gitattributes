@@ -1,1 +1,13 @@
 * text=auto !eol
+/Externals -text
+Vol/configure -text
+Vol/configure.ac -text
+Vol/inc/config_vol.h.in -text
+Vol/vol_addlibs.txt.in -text
+/config.guess -text
+/config.sub -text
+/configure -text
+/configure.ac -text
+/depcomp -text
+/install-sh -text
+/missing -text
