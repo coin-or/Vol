@@ -257,7 +257,7 @@ CONFIG_DIST = VolConfig.hpp
 CONFIG_H = config_vol.h
 nodist_include_HEADERS = ../inc/$(CONFIG_DIST)
 CLEANFILES = bla.tmp
-DISTCLEANFILES = $(CONFIG_DIST)
+DISTCLEANFILES = ../inc/$(CONFIG_DIST)
 all: all-am
 
 .SUFFIXES:
