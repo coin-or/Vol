@@ -44,7 +44,7 @@ AC_COIN_INIT_AUTOMAKE
 #############################################################################
 
 AC_COIN_MAIN_SUBDIRS(CoinBase)
-AC_COIN_MAIN_SUBDIRS(Clp)
+AC_COIN_MAIN_SUBDIRS(Vol)
 
 ##############################################################################
 #                   Finishing up by writing all the output                   #
