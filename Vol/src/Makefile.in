@@ -117,6 +117,8 @@ COIN_DEBUG_FALSE = @COIN_DEBUG_FALSE@
 COIN_DEBUG_TRUE = @COIN_DEBUG_TRUE@
 COIN_HAS_COINBASE_FALSE = @COIN_HAS_COINBASE_FALSE@
 COIN_HAS_COINBASE_TRUE = @COIN_HAS_COINBASE_TRUE@
+COIN_HAS_VOL_FALSE = @COIN_HAS_VOL_FALSE@
+COIN_HAS_VOL_TRUE = @COIN_HAS_VOL_TRUE@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -176,6 +178,8 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
+VOLOBJDIR = @VOLOBJDIR@
+VOLSRCDIR = @VOLSRCDIR@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
@@ -575,7 +579,7 @@ $(libVol_la_OBJECTS): ../inc/$(CONFIG_DIST)
 	echo "/** Required defines from $(CONFIG_H) */" >bla.tmp
 	echo "#ifndef __$(CONFIG_DIST)__" | sed -e 's/\./_/g' >>bla.tmp
 	echo "#define __$(CONFIG_DIST)__" | sed -e 's/\./_/g' >>bla.tmp
-	$(EGREP) 'COIN_HAS' $< >>bla.tmp
+	$(EGREP) 'COIN_' $< >>bla.tmp
 	echo "#endif" >>bla.tmp
 	if test -r ../inc/$(CONFIG_DIST); then \
 	  if diff ./inc/$(CONFIG_DIST) bla.tmp >/dev/null 2>1 ; then \

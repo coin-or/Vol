@@ -59,6 +59,7 @@ AC_COIN_INIT_AUTO_TOOLS
 #############################################################################
 
 AC_COIN_HAS_PROJECT(CoinBase)
+AC_COIN_HAS_PROJECT(Vol)
 
 ##############################################################################
 #                   Finishing up by writing all the output                   #

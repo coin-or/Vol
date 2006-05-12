@@ -6,6 +6,9 @@
 /* Define to 1 if the CoinBase package is used */
 #undef COIN_HAS_COINBASE
 
+/* Define to 1 if the Vol package is used */
+#undef COIN_HAS_VOL
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
