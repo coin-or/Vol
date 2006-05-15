@@ -1614,7 +1614,7 @@ build_os=`echo $ac_cv_build | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
 # externals.  The following macro ensures that those externals are
 # retrieved by svn if they are not there yet.
 # Initialize the ADDLIBS variable (a number of library require -lm)
-ADDLIBS="-lm"
+ADDLIBS="" #"-lm"
 
 
 # A useful makefile conditional that is always false
