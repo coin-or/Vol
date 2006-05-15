@@ -20,7 +20,7 @@ lib_LTLIBRARIES = libVol.la
 libVol_la_SOURCES = VolVolume.cpp VolVolume.hpp
 
 # This is for libtool (on Windows)
-libVol_la_LDFLAGS = -no-undefined
+libVol_la_LDFLAGS = # -no-undefined
 
 ########################################################################
 #                            Additional flags                          #
