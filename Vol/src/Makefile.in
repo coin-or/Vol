@@ -67,7 +67,6 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libVol_la_LIBADD =
 am_libVol_la_OBJECTS = VolVolume.lo
 libVol_la_OBJECTS = $(am_libVol_la_OBJECTS)
-DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/inc
 depcomp = $(SHELL) $(top_srcdir)/../depcomp
 am__depfiles_maybe = depfiles
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -243,6 +242,10 @@ libVol_la_SOURCES = VolVolume.cpp VolVolume.hpp
 
 # This is for libtool (on Windows)
 libVol_la_LDFLAGS = # -no-undefined
+
+# This line is necessary to allow VPATH compilation with MS compilers
+# on Cygwin
+DEFAULT_INCLUDES = -I. -I`$(CYGPATH_W) $(srcdir)` -I$(top_builddir)/inc
 
 ########################################################################
 #                Headers that need to be installed                     #

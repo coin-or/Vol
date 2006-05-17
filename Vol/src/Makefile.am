@@ -34,6 +34,10 @@ libVol_la_LDFLAGS = # -no-undefined
 CXXFLAGS += \
 	-I`$(CYGPATH_W) $(COINUTILSSRCDIR)/src`
 
+# This line is necessary to allow VPATH compilation with MS compilers
+# on Cygwin
+DEFAULT_INCLUDES = -I. -I`$(CYGPATH_W) $(srcdir)` -I$(top_builddir)/inc
+
 ########################################################################
 #                Headers that need to be installed                     #
 ########################################################################
