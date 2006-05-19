@@ -157,6 +157,7 @@ LIBTOOL = @LIBTOOL@
 LIBTOOLM4 = @LIBTOOLM4@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_LDFLAGS = @LT_LDFLAGS@
 MAINT = @MAINT@
 MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
 MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
@@ -240,7 +241,7 @@ lib_LTLIBRARIES = libVol.la
 libVol_la_SOURCES = VolVolume.cpp VolVolume.hpp
 
 # This is for libtool (on Windows)
-libVol_la_LDFLAGS = # -no-undefined
+libVol_la_LDFLAGS = $(LT_LDFLAGS)
 
 # This line is necessary to allow VPATH compilation with MS compilers
 # on Cygwin
