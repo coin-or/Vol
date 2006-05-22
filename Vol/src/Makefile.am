@@ -17,7 +17,7 @@ AUTOMAKE_OPTIONS = foreign
 lib_LTLIBRARIES = libVol.la
 
 # List all source files for this library, including headers
-libVol_la_SOURCES = VolVolume.cpp VolVolume.hpp
+libVol_la_SOURCES = VolConfig.h VolVolume.cpp VolVolume.hpp
 
 # This is for libtool (on Windows)
 libVol_la_LDFLAGS = $(LT_LDFLAGS)
