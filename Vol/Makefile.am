@@ -23,25 +23,41 @@ SUBDIRS = src
 EXTRA_DIST = \
 	doc/ufldoc.bib \
 	doc/ufldoc.ps \
-	doc/ufldoc.tex
+	doc/ufldoc.tex \
+	examples/Volume-LP/lpc.cpp \
+	examples/Volume-LP/lp.h \
+	examples/Volume-LP/Makefile.in \
+	examples/Volume-LP/reader.cpp \
+	examples/Volume-LP/lpc.h \
+	examples/Volume-LP/Doc \
+	examples/Volume-LP/Doc/doc.bib \
+	examples/Volume-LP/Doc/doc_latex.tex \
+	examples/Volume-LP/Doc/doc_latex.ps \
+	examples/Volume-LP/Doc/doc_latex.dvi \
+	examples/Volume-LP/data.mps.gz \
+	examples/Volume-LP/reader.h \
+	examples/Volume-LP/lp.cpp \
+	examples/Volume-LP/lp.par \
+	examples/Volume-LP/README \
+	examples/VolUfl/Makefile.in \
+	examples/VolUfl/doc \
+	examples/VolUfl/doc/ufldoc.bib \
+	examples/VolUfl/doc/ufldoc.tex \
+	examples/VolUfl/doc/ufldoc.ps \
+	examples/VolUfl/INSTALL \
+	examples/VolUfl/ufl.cpp \
+	examples/VolUfl/ufl.par \
+	examples/VolUfl/data.gz \
+	examples/VolUfl/ufl.hpp \
+	examples/VolLp/Makefile.in \
+	examples/VolLp/INSTALL \
+	examples/VolLp/vollp.cpp
 
 ########################################################################
 #                           Extra Targets                              #
 ########################################################################
 
 # Have none, since we don't have a unit Test
-
-########################################################################
-#                  Installation of the addlibs file                    #
-########################################################################
-
-addlibsfile = vol_addlibs.txt
-
-install-exec-local:
-	$(install_sh_DATA) $(addlibsfile) $(DESTDIR)$(libdir)/$(addlibsfile)
-
-uninstall-local:
-	rm -f $(DESTDIR)$(libdir)/$(addlibsfile)
 
 ########################################################################
 #                         Maintainer Stuff                             #

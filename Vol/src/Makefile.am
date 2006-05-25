@@ -17,7 +17,7 @@ AUTOMAKE_OPTIONS = foreign
 lib_LTLIBRARIES = libVol.la
 
 # List all source files for this library, including headers
-libVol_la_SOURCES = VolConfig.h VolVolume.cpp VolVolume.hpp
+libVol_la_SOURCES = VolVolume.cpp VolVolume.hpp
 
 # This is for libtool (on Windows)
 libVol_la_LDFLAGS = $(LT_LDFLAGS)
@@ -44,22 +44,4 @@ DEFAULT_INCLUDES = -I. -I`$(CYGPATH_W) $(srcdir)` -I$(top_builddir)/inc
 
 # Here list all the header files that are required by a user of the library,
 # and that therefore should be installed in 'install'
-include_HEADERS = ../inc/config_vol.h VolVolume.hpp
-
-#############################################################################
-# Create the Config.h file that always defines HAVE_CONFIG_H and install it #
-#############################################################################
-
-# You only need to adapt the following line
-ConfigHeader = VolConfig.h
-
-install-exec-local:
-	echo "#ifndef HAVE_CONFIG_H" >bla
-	echo "#define HAVE_CONFIG_H" >>bla
-	echo "#endif" >> bla
-	cat $(srcdir)/$(ConfigHeader) >> bla
-	$(install_sh_DATA) bla $(DESTDIR)$(includedir)/$(ConfigHeader)
-	rm -f bla
-
-uninstall-local:
-	rm -f $(DESTDIR)$(includedir)/$(ConfigHeader)
+include_HEADERS = VolVolume.hpp

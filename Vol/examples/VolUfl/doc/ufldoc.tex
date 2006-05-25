@@ -1,0 +1,351 @@
+\documentclass{article}
+
+\setlength{\evensidemargin}{.25in}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\textwidth}{6.0in}
+%\setlength{\parindent}{0.25in}
+\setlength{\topmargin}{-0in}
+\setlength{\textheight}{8.0in}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{corollary}{Corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\bibliographystyle{siam}
+
+\title{\bf An implementation of the Volume Algorithm}
+\author{Francisco Barahona}
+\date{June 22, 2000}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+Here we describe an implementation of the Volume algorithm (VA) originally
+presented in \cite{BA}. We focus on the {\it uncapacitated facility location
+problem} (UFLP) as an example, see \cite{BC} for some of the theoretical
+issues. As a first step, a new user should be able to run our code ``as is''.
+This can also be used as a framework for Lagrangian relaxation. The user would
+have to modify the files {\tt ufl.hpp}, {\tt ufl.cpp}, {\tt ufl.par}, and {\tt
+data}, to produce an implementation for a different problem. The files {\tt
+volume.hpp} and {\tt volume.cpp} are specific to the VA, so the user should
+not have to change them. We hope to receive reports about bugs and/or
+successful experiences.
+
+\smallskip
+
+Initially this directory contains the files: {\tt INSTALL, Makefile,
+  volume.hpp, volume.cpp, ufl.hpp, ufl.cpp, ufl.par, data, doc.ps}. See the
+  {\tt INSTALL} file for instructions on installation.
+
+Now we present the linear program used in \cite{BC}. This is
+\begin{eqnarray}
+\min \sum c_{ij} x_{ij} & + & \sum f_i y_i  \label{fp1} \\
+\sum_i x_{ij} & = & 1, \hbox{ for all } j,  \label{fp2} \\
+x_{ij} & \leq & y_i, \hbox{ for all } i, j, \label{fp3} \\
+x_{ij} & \ge  & 0, \hbox{ for all } i, j,   \label{fp4} \\ 
+y_i    & \le  & 1, \hbox{ for all } i.      \label{fp5}
+\end{eqnarray}
+
+Here the variables $y$ correspond to the locations, and the variables $x$
+represent connections between customers and locations. Let $u_j$ be a set of
+Lagrange multipliers for equations (\ref{fp2}). When we dualize equations
+(\ref{fp2}), we obtain the {\it lagrangian problem}
+\begin{eqnarray*}
+L(u) & = & \min \sum \bar c_{ij} x_{ij} + \sum \bar f_i y_i + \sum u_j, \\
+x_{ij} & \le & y_i, \hbox{ for all } i, j, \\
+x_{ij} & \ge & 0, \hbox{ for all } i, j, \\
+y_i    & \le & 1, \hbox{ for all } i.
+\end{eqnarray*}
+
+\noindent Where the {\it reduced costs} $\bar c_{ij}=c_{ij}-u_j$, and
+$\bar f_i = f_i$. We apply the VA to maximize $L(\cdot)$ and to produce a
+primal vector $(\bar x, \bar y)$ that is an approximate solution of
+(\ref{fp1})-(\ref{fp5}). Using this primal information we run a heuristic
+that gives an integer solution.
+
+In what follows we describe the different files in this directory.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{ufl.par}
+
+This file contains a set of parameters that control the algorithm and contain
+some information about the data. Each line has the format
+
+{\tt keyword=value}
+
+\noindent where {\tt keyword} should start in the first column. If we add any
+other character in the first column, the line is ignored or considered as a
+comment. The file looks as below
+
+\bigskip
+\begin{verbatim}
+fdata=data
+*dualfile=dual.txt
+dual_savefile=dual.txt
+int_savefile=int_sol.txt
+h_iter=100
+
+printflag=3
+printinvl=5
+heurinvl=10
+
+greentestinvl=1
+yellowtestinvl=4
+redtestinvl=10
+
+lambdainit=0.1
+alphainit=0.1
+alphamin=0.0001
+alphafactor=0.5
+alphaint=50
+
+maxsgriters=2000
+primal_abs_precision=0.02
+gap_abs_precision=0.
+gap_rel_precision=0.01
+granularity=0.
+\end{verbatim}
+
+The first group of parameters are specific to the UFLP and the user should
+define them. {\tt fdata} is the name of the file containing the data. {\tt
+dualfile} is the name of a file containing an initial dual vector. If we add
+an extra character at the beginning ({\tt *dualfile}) this line is ignored,
+this means that no initial dual vector is given. {\tt dual\_savefile} is the
+name of a file where we save the final dual vector. If this line is missing,
+then the dual vector is not saved. {\tt int\_savefile} is the name of a file
+to save the best integer solution found by the heuristic procedure, if this
+line is missing, then this vector is not saved. {\tt h\_iter} is the number of
+times that the heuristic is run after the VA has finished.
+
+The remaining parameters are specific to the VA. See the {\tt VOL\_parms.html}
+file for their documentation (this file will be created after doing a `make
+doc` or it's available on the Internet).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{data}
+
+The file {\tt data} has the following format. On the first line we have the
+number of possible locations and the number of customers. On the next lines,
+the cost of opening each location appears, one cost per line. Then each of the
+remaining lines is like
+
+$
+i \quad j \quad d_{ij},
+$
+
+\noindent where $i$ refers to a location, $j$ refers to a customer, and
+$d_{ij}$ is the cost of serving customer $j$ from location $i$. The indices
+$i$ and $j$ start from 1. If a pair $i,j$ is missing then the cost $d_{ij}$ is
+set to $10^7$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{ufl.hpp}
+
+This file contains C++ classes specific to the UFLP.
+
+First we have a class of parameters specific to the UFLP. The description
+of these parameters appears in the preceding section.
+
+\begin{verbatim}
+class UFL_parms {
+public:
+   string fdata;         // file with the data
+   string dualfile;      // file with an initial dual solution
+   string dual_savefile; // file to save final dual solution
+   string int_savefile;  // file to save primal integer solution
+   int h_iter;           // number of times that the primal heuristic will be
+                         // run after termination of the volume algorithm
+   
+   UFL_parms(const char* filename);
+   ~UFL_parms() {}
+};
+\end{verbatim}
+
+Before the next class we should mention the classes {\tt VOL\_dvector} and
+{\tt VOL\_ivector} defined in {\tt Volume.hpp}. The pseudo-code below
+illustrates their use. 
+
+\begin{verbatim}
+int n=100; 
+VOL_dvector x(n);  // a double vector with n entries 
+x=0.;              // sets to 0. all entries of x 
+VOL_dvector y;     // a double vector, it size remains to be set 
+y.allocate(n);     // size is set
+y=x;               // copy each entry of x into y 
+VOL_dvector z(y);  // a double vector of the same size as y, 
+                   // all entries of y are copied into z 
+x[0]=-1;           // first entry of x is set to -1 
+y[0]=x[0];         // copy first entry of x into first entry of y
+\end{verbatim}
+
+The class {\tt VOL\_ivector} is used for vectors of {\tt int}. One can do the
+same operations as for {\tt VOL\_dvector}.
+
+Then we have a class containing the data for the UFLP.
+
+\begin{verbatim}
+class UFL\_data { // original data for uncapacitated facility location
+public:
+   VOL_dvector fcost; // cost for opening facilities
+   VOL_dvector dist;  // cost for connecting a customer to a facility
+   VOL_dvector fix;   // vector saying if some variables should be fixed
+                      // if fix=-1 nothing is fixed
+   int ncust, nloc;   // number of customers, number of locations
+   VOL_ivector ix;    // best integer feasible solution so far
+   double      icost; // value of best integer feasible solution 
+public:
+   UFL_data() : icost(DBL_MAX) {}
+   ~UFL\_data() {}  
+};
+\end{verbatim}
+
+Then we have
+
+\begin{verbatim}
+class UFL_hook : public VOL_user_hooks {
+public:
+   // for all hooks: return value of -1 means that volume should quit
+   // compute reduced costs
+   int compute_rc(void * user_data, 
+                  const VOL_dvector& u, VOL_dvector& rc);
+   // solve lagrangian problem
+   int solve_subproblem(void * user_data, 
+                        const VOL_dvector& u, const VOL_dvector& rc,
+                        double& lcost, VOL_dvector& x, VOL_dvector&v,
+                        double& pcost);
+   // primal heuristic
+   // return DBL_MAX in heur_val if feas sol wasn't/was found 
+   int heuristics(void * user_data, const VOL_problem& p, 
+                  const VOL_dvector& x, double& heur_val);
+};
+\end{verbatim}
+
+Here the function {\tt compute\_rc} is used to compute reduced costs. In the
+function {\tt solve\_subproblem} we solve the lagrangian problem. In {\tt
+heuristics} we run a heuristic to produce a primal integer solution.
+
+Finally in this file we have {\tt UFL\_parms::UFL\_parms(const char
+*filename)}, where we read the values for the members of {\tt UFL\_parms}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{ufl.cpp}
+
+This file contains several functions that we describe below.
+
+First we have {\tt int main(int argc, char* argv[])}. In here we initialize
+the classes described in {\tt ufl.hpp}, and read the data. Then {\tt
+volp.psize()} is set to the number of primal variables, and {\tt volp.dsize()}
+is set to the number of dual variables. Then we check if a dual solution is
+provided and if so we read it.
+
+For the UFLP all relaxed constraints are equations, so the dual variables are
+unrestricted. In this case we do not have to set bounds for the dual
+variables. If we have inequalities of the type $ax \ge b$, then we have to set
+the lower bounds of their dual variables equal to 0. If we had constraints of
+the type type $ax \le b$, then we have to set the upper bounds of their
+variables equal to 0. This would be done as in the pseudo-code below.
+
+\begin{verbatim}
+// first the lower bounds to -inf, upper bounds to inf 
+volp.dual_lb.allocate(volp.dsize);
+volp.dual_lb = -1e31;
+volp.dual_ub.allocate(volp.dsize);
+volp.dual_ub = 1e31;
+// now go through the relaxed constraints and change the lb of the ax >= b
+// constrains to 0, and change the ub of the ax <= b constrains to 0.
+for (i = 0; i < volp.dsize; ++i) {
+   if ("constraint i is '<=' ") {
+      volp.dual_ub[i] = 0;
+   }
+   if ("constraint i is '>=' ") {
+      volp.dual_lb[i] = 0;
+   }
+}
+\end{verbatim}
+
+The function {\tt volp.solve} invokes the VA. After completion we compute the
+violation of the fractional primal solution obtained. This vector is {\tt
+psol}. Then we check if the user provided the name of a file to save the dual
+solution. If so, we save it. Then we run the primal heuristic using {\tt psol}
+as an input. Notice that this heuristic has also been run periodically during
+the execution of the VA. Then if the user has provided the name of a file to
+save the integer heuristic solution, we do it. Finally the values of the
+solutions and some statistics are printed.
+
+The next function is {\tt void UFL\_read\_data(const char* fname, UFL\_data\&
+data)}, where we read the data. {\tt data.nloc} is the number of locations,
+{\tt data.ncust} is the number of customers. {\tt data.fcost} is a vector
+containing the cost of opening each location. {\tt data.dist} is a vector
+containing the cost of serving customers from facilities. All entries are
+initialized to $10^7$ and then particular entries are being set with the
+statement
+
+{\tt dist[(i-1)*ncust + j-1]=cost;}
+
+\noindent where {\tt i} is the index of a location and {\tt j} is the index
+of a customer. Here the indices start from 1. Finally we have a vector {\tt
+data.fix} associated with the locations. A particular entry is set to 0 if the
+location should be closed, it is set to 1 if it should be open, and it is set
+to -1 if this variable is free. Initially all entries are set to -1.
+
+In the function 
+
+{\tt double solve\_it(void * user\_data, const double* rdist, 
+VOL\_ivector\& sol)}
+
+\noindent we solve the lagrangian problem.
+We receive the data and reduced costs as input and return a primal vector. The
+solution is in the vector {\tt sol}. Its first {\tt n} entries correspond to
+the locations, then all remaining entries correspond to connections between
+locations and customers.
+
+In the function 
+
+{\tt int UFL\_hook::compute\_rc(void * user\_data, const VOL\_dvector\& u, 
+VOL\_dvector\& rc)}
+
+\noindent we compute the reduced costs. They will be used to solve the
+lagrangian problem. 
+
+In the function 
+
+\begin{verbatim}
+   int 
+   UFL_hook::solve_subproblem(void *user_data, 
+                              const VOL_dvector& u, const VOL_dvector& rc,
+                              double& lcost, VOL_dvector& x, 
+                              VOL_dvector& v, double& pcost)
+\end{verbatim}
+
+\noindent we compute the lagrangian value, we call {\tt solve\_it}, we compute
+the objective value and the vector $v$ defined as follows. If $\hat x$ is the
+primal solution given by {\tt solve\_it}, and $Ax \sim b$ is the set of
+relaxed constraints, then the difference $v$ is $$v = b - A \hat x.$$
+
+The last function in this file is
+\begin{verbatim}
+   int 
+   UFL_hook::heuristics(void * user_data, const VOL_problem& p,
+                        const VOL_dvector& x, double& icost)
+\end{verbatim}
+
+\noindent where we run the following simple heuristic. 
+Given a fractional solution $(\bar x, \bar y)$, let $\bar y_i$ be the variable
+associated with location $i$. We pick a random number $r \in [ 0, 1 ]$ and if
+$r < \bar y_i$ facility $i$ is open, and closed otherwise. We repeat this for
+every facility, then given the set of open facilities we find a minimum cost
+assignment of customers. This function is invoked periodically in the VA and
+by the main program after the VA has finished.
+
+
+\bibliography{ufldoc}
+
+\end{document}
+
+

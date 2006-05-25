@@ -1,0 +1,20 @@
+
+The vollp example shows how to use the Volume algorithm to solve an LP (well,
+to get an approximate solution). In fact, the very same code is in the heart
+of the OsiVolSolverInterface code of Osi.
+
+To build the vollp example of using Vol
+  - Read and edit the ${CoinDir}/Makefiles/Makefile.location as necessary
+  - Edit Makefile.vollp to set the optimization level
+  - make  
+     - must use gnu make. 
+     - Targets are put in subdirectories.
+       The name of the target subdirectory is derived using uname 
+       command and some compiler flags.
+ 
+To run vollp
+  - ./TARGET_SUBDIRECTORY/vollp
+    where TARGET_SUBDIRECTORY is the name of the subdirectory 
+    containing the vollp executable.
+    There are command line parameters. When none are specifed,
+    help text describing the parameters is provided.

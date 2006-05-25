@@ -1,0 +1,182 @@
+\documentclass{article}
+
+\setlength{\evensidemargin}{.25in}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\textwidth}{6.0in}
+%\setlength{\parindent}{0.25in}
+\setlength{\topmargin}{-0in}
+\setlength{\textheight}{8.0in}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{corollary}{Corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\bibliographystyle{siam}
+
+\title{\bf The Volume Algorithm for Combinatorial Linear Programs}
+\author{Francisco Barahona}
+\date{January 24, 2001}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+Here we have an implementation of the Volume algorithm (VA) originally
+presented in \cite{BA}. We focus on {\it Combinatorial Linear Programs},
+these are linear programs where the matrix has 0, 1, -1 coefficients
+and the variables are bounded between 0 and 1. The VA has been very
+effective at producing fast approximate solutions to these LPs, see
+\cite{BA2}.
+As a first step, a new user should be able to run our code ``as is''.
+The input should be an MPS file.
+We hope to receive reports about bugs and/or
+successful experiences.
+
+\smallskip
+
+Initially this directory contains the files: {\tt Makefile, volume.hpp,
+volume.cpp, lp.hpp, lp.cpp, lp.par, data, doc.ps, lpc.h, lpc.cpp,
+names.h, names.cpp}. On a Unix system one
+should type
+\begin{center} {\tt make} \end{center}
+
+\noindent and then
+
+\begin{center} {\tt bin/myprogram} \end{center}
+
+\noindent Then the code would run and produce the files {\tt primal.txt}
+and {\tt dual.txt} that contain approximate solutions to both the primal
+and the dual problem.
+
+\smallskip
+
+We assume that we have an LP like
+\begin{eqnarray}
+&\min c x  \label{fp1} \\
+&Ax \sim b \label{fp2} \\
+&l \leq x \le u. \label{fp3} 
+\end{eqnarray}
+
+Let $\pi$ be a set of
+Lagrange multipliers for constraints (\ref{fp2}). When we dualize 
+them we obtain the {\it lagrangian problem}
+
+\begin{eqnarray*}
+L(u) & = & \min (c-\pi A) x + \pi b, \\
+&&l \leq x \le u.
+\end{eqnarray*}
+
+We apply the VA to maximize $L(\cdot)$ and to produce a
+dual vector $\bar \pi$, and
+primal vector $\bar x$ that is an approximate solution of
+(\ref{fp1})-(\ref{fp3}).
+
+In what follows we describe the files {\tt lp.par} and
+{\tt data}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{lp.par}
+
+This file contains a set of parameters that control the algorithm and contain
+information about the data. Each line has the format
+
+{\tt keyword=value}
+
+\noindent where {\tt keyword} should start in the first column. If we add any
+other character in the first column, the line is ignored or considered as a
+comment. The file looks as below
+
+\bigskip
+\begin{verbatim}
+fdata=data.mps
+*dualfile=dual.txt
+dual_savefile=dual.txt
+primal_savefile=primal.txt
+h_iter=0
+var_ub=1.0
+
+
+printflag=3
+printinvl=20
+heurinvl=100000000
+
+greentestinvl=2
+yellowtestinvl=2
+redtestinvl=10
+
+lambdainit=0.1
+alphainit=0.01
+alphamin=0.0001
+alphafactor=0.5
+alphaint=80
+
+maxsgriters=2000
+primal_abs_precision=0.02
+gap_abs_precision=0.
+gap_rel_precision=0.01
+granularity=0.
+
+\end{verbatim}
+
+The first group of parameters are specific to LP and the user should
+define them. {\tt fdata} is the name of the file containing the data. {\tt
+dualfile} is the name of a file containing an initial dual vector. If we add
+an extra character at the beginning ({\tt *dualfile}) this line is ignored,
+this means that no initial dual vector is given. {\tt dual\_savefile} is the
+name of a file where we save the final dual vector. If this line is missing,
+then the dual vector is not saved. {\tt primal\_savefile} is the name of a file
+to save the primal solution, if this
+line is missing, then this vector is not saved. {\tt h\_iter} is the number of
+times that the heuristic is run after the VA has finished. We did not include 
+a heuristic in this implementation. {\tt var\_ub} is an upper bound
+for all primal variables, for 0-1 problems we set {\tt var\_ub=1}.
+
+The remaining parameters are specific to the VA. {\tt printflag} controls the
+level of output, it should be an integer between 0 and 5. {\tt printinvl=k}
+means that we print algorithm information every {\tt k} iterations. {\tt
+heurinvl=k} means that the primal heuristic is run every {\tt k} iterations.
+{\tt greentestinvl=k} means that after {\tt k} consecutive green iterations
+the value of $\lambda$ is multiplied by 2. {\tt yellowtestinvl=k} means that
+after {\tt k} consecutive yellow iterations the value of $\lambda$ is
+multiplied by 1.1. {\tt redtestinvl=k} means that after {\tt k} consecutive
+red iterations the value of $\lambda$ is multiplied by 0.67. {\tt lambdainit}
+is the initial value of $\lambda$. {\tt alphainit} is the initial value of
+$\alpha$. {\tt alphafactor=f} and {\tt alphaint=k} mean that every {\tt k}
+iterations we check if the objective function has increased by at least 1\%,
+if not we multiply $\alpha$ by {\tt f}.
+
+There are three termination criteria. First {\tt maxsgriter} is the maximum
+number of iterations. The second terminating criterion is as follows. {\tt
+primal\_abs\_precision} is the maximum primal violation to consider a primal
+vector ``near-feasible''. Let {\tt gap\_rel\_precision=$g$}, let $z$ be the
+value of the current dual solution, and $p$ be the value of a current
+near-feasible primal solution. If $|z| > 0.0001$ and
+$$
+        { | z - p | \over | z | } < g,
+$$
+then the algorithms stops. Let {\tt gap\_abs\_precision=$f$}, if $|z| \le
+0.0001$ and $| z - p | < f$ then we stop. Finally, let {\tt granularity=$k$},
+and let $U$ be the value of the best heuristic integer solution found. Then if
+$ U - z < k$ we stop. We did not include any heuristic in this 
+implementation.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{data}
+
+This is an MPS file. If a different type of input should
+be used, one has to change the code in {\tt reader.cpp}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\bibliography{doc}
+
+\end{document}
+
+

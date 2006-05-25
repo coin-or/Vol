@@ -58,8 +58,19 @@ AC_COIN_INIT_AUTO_TOOLS
 #                              COIN components                              #
 #############################################################################
 
-AC_COIN_HAS_PROJECT(CoinUtils)
 AC_COIN_HAS_PROJECT(Vol)
+
+##############################################################################
+#                   VPATH links for example input files                      #
+##############################################################################
+
+# In case this is a VPATH configuration we need to make sure that the
+# input files for the examples are available in the VPATH directory.
+
+AC_COIN_VPATH_LINK(examples/VolUfl/ufl.par)
+AC_COIN_VPATH_LINK(examples/VolUfl/data.gz)
+AC_COIN_VPATH_LINK(examples/Volume-LP/data.mps.gz)
+AC_COIN_VPATH_LINK(examples/Volume-LP/lp.par)
 
 ##############################################################################
 #                   Finishing up by writing all the output                   #
@@ -68,11 +79,10 @@ AC_COIN_HAS_PROJECT(Vol)
 # Here list all the files that configure should create (except for the
 # configuration header file)
 AC_CONFIG_FILES([Makefile
-                 src/Makefile
-		 vol_addlibs.txt])
-
-# Here put the location and name of the configuration header file
-AC_CONFIG_HEADER([inc/config_vol.h])
+		 examples/VolLp/Makefile
+		 examples/VolUfl/Makefile
+		 examples/Volume-LP/Makefile
+                 src/Makefile])
 
 # Finally, we let configure write all the output...
 AC_OUTPUT
