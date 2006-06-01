@@ -60,8 +60,8 @@ DIST_COMMON = $(am__configure_deps) \
 	$(top_srcdir)/examples/VolLp/Makefile.in \
 	$(top_srcdir)/examples/VolUfl/Makefile.in \
 	$(top_srcdir)/examples/Volume-LP/Makefile.in INSTALL
-@HAVE_EXTERNALS_TRUE@@MAINTAINER_MODE_TRUE@am__append_1 = .Externals-stamp
-@HAVE_EXTERNALS_TRUE@@MAINTAINER_MODE_TRUE@am__append_2 = Externals
+@HAVE_EXTERNALS_TRUE@am__append_1 = Externals
+@HAVE_EXTERNALS_TRUE@am__append_2 = .Externals-stamp
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -72,9 +72,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno configure.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = examples/VolLp/Makefile examples/VolUfl/Makefile \
-	examples/Volume-LP/Makefile examples/VolUfl/ufl.par \
-	examples/VolUfl/data.gz examples/Volume-LP/data.mps.gz \
-	examples/Volume-LP/lp.par
+	examples/Volume-LP/Makefile
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -171,6 +169,7 @@ STRIP = @STRIP@
 VERSION = @VERSION@
 VOLOBJDIR = @VOLOBJDIR@
 VOLSRCDIR = @VOLSRCDIR@
+VPATH_DISTCLEANFILES = @VPATH_DISTCLEANFILES@
 abs_bin_dir = @abs_bin_dir@
 abs_include_dir = @abs_include_dir@
 abs_lib_dir = @abs_lib_dir@
@@ -248,14 +247,14 @@ EXTRA_DIST = doc/doxygen.conf doc/ufldoc.bib doc/ufldoc.ps \
 	examples/VolUfl/ufl.par examples/VolUfl/data.gz \
 	examples/VolUfl/ufl.hpp examples/VolLp/Makefile.in \
 	examples/VolLp/INSTALL examples/VolLp/vollp.cpp \
-	$(am__append_2)
+	$(am__append_1)
 
 ########################################################################
 #                         Maintainer Stuff                             #
 ########################################################################
 
 # Files that are generated and should be cleaned with make distclean
-DISTCLEANFILES = $(am__append_1)
+DISTCLEANFILES = $(am__append_2) $(VPATH_DISTCLEANFILES)
 all: all-recursive
 
 .SUFFIXES:
