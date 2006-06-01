@@ -34,5 +34,6 @@ Vol/examples/Volume-LP/reader.h -text
 /configure -text
 /configure.ac -text
 /depcomp -text
+doxydoc/doxygen.conf -text
 /install-sh -text
 /missing -text

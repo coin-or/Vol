@@ -21,7 +21,6 @@ SUBDIRS = src
 # Here we need include all files that are not mentioned in other Makefiles
 
 EXTRA_DIST = \
-	doc/doxygen.conf \
 	doc/ufldoc.bib \
 	doc/ufldoc.ps \
 	doc/ufldoc.tex \
@@ -58,10 +57,7 @@ EXTRA_DIST = \
 #                           Extra Targets                              #
 ########################################################################
 
-doc:
-	cd $(srcdir); doxygen doc/doxygen.conf
-
-.PHONY: doc
+# We dont' have any test here
 
 ########################################################################
 #                         Maintainer Stuff                             #
