@@ -2,7 +2,6 @@
 /Externals -text
 Vol/configure -text
 Vol/configure.ac -text
-Vol/doc/doxygen.conf -text
 Vol/examples/VolLp/INSTALL -text
 Vol/examples/VolLp/Makefile.in -text
 Vol/examples/VolLp/vollp.cpp -text
