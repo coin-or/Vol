@@ -1,5 +1,4 @@
 * text=auto !eol
-/Externals -text
 Vol/configure -text
 Vol/configure.ac -text
 Vol/examples/VolLp/INSTALL -text
