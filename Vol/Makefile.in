@@ -56,7 +56,7 @@ DIST_COMMON = $(am__configure_deps) \
 	$(srcdir)/../config.sub $(srcdir)/../install-sh \
 	$(srcdir)/../ltmain.sh $(srcdir)/../missing \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(top_srcdir)/configure \
+	$(srcdir)/vol_addlibs.txt.in $(top_srcdir)/configure \
 	$(top_srcdir)/examples/VolLp/Makefile.in \
 	$(top_srcdir)/examples/VolUfl/Makefile.in \
 	$(top_srcdir)/examples/Volume-LP/Makefile.in
@@ -72,7 +72,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno configure.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = examples/VolLp/Makefile examples/VolUfl/Makefile \
-	examples/Volume-LP/Makefile
+	examples/Volume-LP/Makefile vol_addlibs.txt
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -260,6 +260,11 @@ EXTRA_DIST = doc/ufldoc.bib doc/ufldoc.ps doc/ufldoc.tex \
 # We dont' have any test here
 
 ########################################################################
+#                  Installation of the addlibs file                    #
+########################################################################
+addlibsfile = vol_addlibs.txt
+
+########################################################################
 #                         Maintainer Stuff                             #
 ########################################################################
 
@@ -306,6 +311,8 @@ examples/VolLp/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/Vo
 examples/VolUfl/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/VolUfl/Makefile.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 examples/Volume-LP/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/Volume-LP/Makefile.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+vol_addlibs.txt: $(top_builddir)/config.status $(srcdir)/vol_addlibs.txt.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
@@ -453,7 +460,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/.. $(distdir)/../BuildTools $(distdir)/doc $(distdir)/examples/VolLp $(distdir)/examples/VolUfl $(distdir)/examples/VolUfl/doc $(distdir)/examples/Volume-LP $(distdir)/examples/Volume-LP/Doc
+	$(mkdir_p) $(distdir)/. $(distdir)/.. $(distdir)/../BuildTools $(distdir)/doc $(distdir)/examples/VolLp $(distdir)/examples/VolUfl $(distdir)/examples/VolUfl/doc $(distdir)/examples/Volume-LP $(distdir)/examples/Volume-LP/Doc
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -644,7 +651,7 @@ info-am:
 
 install-data-am:
 
-install-exec-am:
+install-exec-am: install-exec-local
 
 install-info: install-info-recursive
 
@@ -670,7 +677,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am
+uninstall-am: uninstall-info-am uninstall-local
 
 uninstall-info: uninstall-info-recursive
 
@@ -682,13 +689,20 @@ uninstall-info: uninstall-info-recursive
 	distclean-tags distcleancheck distdir distuninstallcheck dvi \
 	dvi-am html html-am info info-am install install-am \
 	install-data install-data-am install-exec install-exec-am \
-	install-info install-info-am install-man install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
+	install-exec-local install-info install-info-am install-man \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
 	maintainer-clean-recursive mostlyclean mostlyclean-generic \
 	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am uninstall-info-am
+	tags tags-recursive uninstall uninstall-am uninstall-info-am \
+	uninstall-local
 
+
+install-exec-local:
+	$(install_sh_DATA) $(addlibsfile) $(DESTDIR)$(libdir)/$(addlibsfile)
+
+uninstall-local:
+	rm -f $(DESTDIR)$(libdir)/$(addlibsfile)
 
 # Make sure acinclude is using most recent coin.m4
 @MAINTAINER_MODE_TRUE@$(srcdir)/acinclude.m4: $(BUILDTOOLSDIR)/coin.m4

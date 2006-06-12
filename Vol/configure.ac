@@ -80,7 +80,8 @@ AC_CONFIG_FILES([Makefile
 		 examples/VolLp/Makefile
 		 examples/VolUfl/Makefile
 		 examples/Volume-LP/Makefile
-                 src/Makefile])
+                 src/Makefile
+		 vol_addlibs.txt])
 
 # Finally, we let configure write all the output...
 AC_COIN_FINALIZE

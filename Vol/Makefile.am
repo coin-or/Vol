@@ -60,6 +60,18 @@ EXTRA_DIST = \
 # We dont' have any test here
 
 ########################################################################
+#                  Installation of the addlibs file                    #
+########################################################################
+
+addlibsfile = vol_addlibs.txt
+
+install-exec-local:
+	$(install_sh_DATA) $(addlibsfile) $(DESTDIR)$(libdir)/$(addlibsfile)
+
+uninstall-local:
+	rm -f $(DESTDIR)$(libdir)/$(addlibsfile)
+
+########################################################################
 #                         Maintainer Stuff                             #
 ########################################################################
 
