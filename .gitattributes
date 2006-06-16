@@ -1,4 +1,5 @@
 * text=auto !eol
+Vol/LICENSE -text
 Vol/configure -text
 Vol/configure.ac -text
 Vol/examples/VolLp/INSTALL -text
