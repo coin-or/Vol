@@ -4,6 +4,7 @@
 Vol/LICENSE -text
 Vol/configure -text
 Vol/configure.ac -text
+Vol/doc/volDoc.bib -text
 Vol/doc/volDoc.tex -text
 Vol/examples/VolLp/INSTALL -text
 Vol/examples/VolLp/Makefile.in -text
