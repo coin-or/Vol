@@ -14,9 +14,6 @@ Vol/examples/VolLp/vollp.cpp -text
 Vol/examples/VolUfl/INSTALL -text
 Vol/examples/VolUfl/Makefile.in -text
 Vol/examples/VolUfl/data.gz -text
-Vol/examples/VolUfl/doc/ufldoc.bib -text
-Vol/examples/VolUfl/doc/ufldoc.ps -text
-Vol/examples/VolUfl/doc/ufldoc.tex -text
 Vol/examples/VolUfl/ufl.cpp -text
 Vol/examples/VolUfl/ufl.hpp -text
 Vol/examples/VolUfl/ufl.par -text
