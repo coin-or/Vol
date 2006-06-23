@@ -17,10 +17,6 @@ Vol/examples/VolUfl/data.gz -text
 Vol/examples/VolUfl/ufl.cpp -text
 Vol/examples/VolUfl/ufl.hpp -text
 Vol/examples/VolUfl/ufl.par -text
-Vol/examples/Volume-LP/Doc/doc.bib -text
-Vol/examples/Volume-LP/Doc/doc_latex.dvi -text
-Vol/examples/Volume-LP/Doc/doc_latex.ps -text
-Vol/examples/Volume-LP/Doc/doc_latex.tex -text
 Vol/examples/Volume-LP/Makefile.in -text
 Vol/examples/Volume-LP/README -text
 Vol/examples/Volume-LP/data.mps.gz -text
