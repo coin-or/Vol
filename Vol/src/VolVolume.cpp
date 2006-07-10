@@ -1,6 +1,5 @@
 // Copyright (C) 2000, International Business Machines
 // Corporation and others.  All Rights Reserved.
-
 #include <cstdlib>
 #include <cstdio>
 #include <string>
@@ -281,6 +280,13 @@ VOL_problem::read_params(const char* filename)
       } else if (ss.find("gap_rel_precision") == 0) {
 	 int i = ss.find("=");  
 	 parm.gap_rel_precision = atof(&s[i+1]);
+
+
+      } else if (ss.find("ascent_check_invl") == 0) {
+	  int i = ss.find("=");  
+	  parm.ascent_check_invl = atof(&s[i+1]);
+
+
 
       } else if (ss.find("granularity") == 0) {
 	 int i = ss.find("=");  
