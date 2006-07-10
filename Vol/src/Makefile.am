@@ -32,7 +32,8 @@ libVol_la_LDFLAGS = $(LT_LDFLAGS)
 # "top_srcdir" refers to the basic directory for the main package that is
 # being compiled.
 AM_CPPFLAGS = \
-	-I`$(CYGPATH_W) $(COINUTILSSRCDIR)/src`
+	-I`$(CYGPATH_W) $(COINUTILSSRCDIR)/src` \
+	-I`$(CYGPATH_W) $(COINUTILSOBJDIR)/inc`
 
 # This line is necessary to allow VPATH compilation with MS compilers
 # on Cygwin
