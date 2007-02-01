@@ -25,7 +25,7 @@ SUBDIRS = $(subdirs)
 tests:
 	for dir in $(subdirs); do \
 	  if test -r $$dir/test/Makefile; then \
-	    (cd $$dir; make test) \
+	    (cd $$dir; $(MAKE) test) \
 	  fi; \
 	done
 
