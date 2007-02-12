@@ -6,7 +6,7 @@
 
 using std::vector;
 
-class Lp{
+class VOL_lp {
  public:
   int ncols, nrows, nels;
   int maxcols, nints;
@@ -24,8 +24,8 @@ class Lp{
   vector<int> mc;
   vector<double> els;
   vector<double> cost;
-  Lp();
-  ~Lp(){ }
+  VOL_lp();
+  ~VOL_lp(){ }
   void build_col(int row, double el);
   void rhs(int row, double lb, double ub);
   void finish_up();
