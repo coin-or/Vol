@@ -284,7 +284,7 @@ VOL_problem::read_params(const char* filename)
 
       } else if (ss.find("ascent_check_invl") == 0) {
 	  int i = ss.find("=");  
-	  parm.ascent_check_invl = atof(&s[i+1]);
+	  parm.ascent_check_invl = atoi(&s[i+1]);
 
 
 
