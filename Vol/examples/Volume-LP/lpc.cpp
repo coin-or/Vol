@@ -10,10 +10,10 @@
 using std::cout;
 using std::endl;
 
-Lp::Lp(): mrow(), mcstrt(),
+VOL_lp::VOL_lp(): mrow(), mcstrt(),
 dels(), dcost(), dloc(), dupc(), dlor(), dupr(), intnums()
 {}
-void Lp::set_nrows(const int n)
+void VOL_lp::set_nrows(const int n)
 {
   nels=0;
   nrows=n;
@@ -23,23 +23,23 @@ void Lp::set_nrows(const int n)
   dupr.allocate(n);
   check_col.allocate(n);
 }
-void Lp::intcol(int j){
+void VOL_lp::intcol(int j){
   intnums[nints++]=j;
 }
-void Lp::ub(const int i, const double x){
+void VOL_lp::ub(const int i, const double x){
   dupc[i]=x;
 }
-void Lp::lb(const int i, const double x){
+void VOL_lp::lb(const int i, const double x){
   dloc[i]=x;
 }
-void Lp::addobj( double xx){
+void VOL_lp::addobj( double xx){
   if ( cost[ncols-1]!= 0.0 ){
     cout << "duplicate element in objective for col " << ncols << endl;
     abort();
   }
   cost[ncols-1]=xx;
 }
-void Lp::addel(int row, double el){
+void VOL_lp::addel(int row, double el){
   if ( el == 0.0 ) return;
   if(row < 0 || row >= nrows){
     cout << " error in addel " << row << " " << nrows << endl;
@@ -54,13 +54,13 @@ void Lp::addel(int row, double el){
   check_col[row]=1;
   ++nels;
 }
-void Lp::startcol(){
+void VOL_lp::startcol(){
   mc.push_back(nels);
   cost.push_back(0.0);
   check_col=0;
   ++ncols;
 }
-void Lp::rhs(int row, double lb, double ub){
+void VOL_lp::rhs(int row, double lb, double ub){
   if ( lb > ub ){
     cout << "Error in lp.rhs " << row << " " << lb << " "
 	 << ub << endl;
@@ -69,7 +69,7 @@ void Lp::rhs(int row, double lb, double ub){
   dlor[row]=lb;
   dupr[row]=ub;
 }
-void Lp::finish_up(){
+void VOL_lp::finish_up(){
   mrow.allocate(nels);
   dels.allocate(nels);
   int i;
@@ -109,7 +109,7 @@ void Lp::finish_up(){
   //
 
 }
-void Lp::init_bounds( const int n ){
+void VOL_lp::init_bounds( const int n ){
   dupc.allocate(n);
   dloc.allocate(n);
   dloc=0.0;

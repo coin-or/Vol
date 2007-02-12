@@ -31,7 +31,7 @@ public:
 
 class LP_data_and_hook : public VOL_user_hooks { // original data for LP
 public:
-  Lp lp_pb; // lp data
+  VOL_lp lp_pb; // lp data
   VOL_dvector rhs; // right hand side
   VOL_ivector ix;   // best integer feasible solution so far
   double      icost;  // value of best integer feasible solution 

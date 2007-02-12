@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
    volp.dual_ub = 1e31;
    // now go through the relaxed constraints and change the lb of the ax >= b 
    // constrains to 0, and change the ub of the ax <= b constrains to 0.
-   Lp &lp_pb=lp_data.lp_pb;
+   VOL_lp &lp_pb=lp_data.lp_pb;
    VOL_dvector &rhs=lp_data.rhs;
    rhs=lp_pb.dlor;
    const double bnd=1.e20;
@@ -171,11 +171,9 @@ int main(int argc, char* argv[]) {
 //############################################################################
 
 //
-void LP_read_data(const LP_parms &lp_par, LP_data_and_hook * data) {
-
- 
-
-   Lp& lp_pb = (*data).lp_pb;
+void LP_read_data(const LP_parms &lp_par, LP_data_and_hook * data)
+{
+   VOL_lp& lp_pb = (*data).lp_pb;
    reader(lp_par,&lp_pb);
    const int m=lp_pb.nrows;
    (*data).rhs.allocate(m);

@@ -9,9 +9,9 @@
 
 using namespace std;
 
-int reader(const LP_parms &lp_par, Lp *lp_pb)
+int reader(const LP_parms &lp_par, VOL_lp *lp_pb)
 {  
-  Lp &lp=*lp_pb;
+  VOL_lp &lp=*lp_pb;
   const int length=300;
   char line[length];  
   const double inf=1.e31;

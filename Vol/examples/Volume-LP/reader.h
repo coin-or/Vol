@@ -18,10 +18,10 @@ using std::cout;
 using std::endl;
 
 class LP_parms;
-class Lp;
+class VOL_lp;
 
 // The function that actually reads in the MPS file
-int reader(const LP_parms &lp_par, Lp *lp_pb);
+int reader(const LP_parms &lp_par, VOL_lp *lp_pb);
 
 //#############################################################################
 
