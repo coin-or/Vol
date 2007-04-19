@@ -68,11 +68,7 @@ In the directory where you ran the configure script:
 
    make
 
-2. To test if the code works, you can type
-
-   make test
-
-3. To install the code, you type
+2. To install the code, you type
 
    make install
 
