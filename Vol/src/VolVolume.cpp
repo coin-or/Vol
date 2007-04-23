@@ -286,6 +286,10 @@ VOL_problem::read_params(const char* filename)
 	  int i = ss.find("=");  
 	  parm.ascent_check_invl = atoi(&s[i+1]);
 
+      } else if (ss.find("minimum_rel_ascent") == 0) {
+	  int i = ss.find("=");  
+	  parm.minimum_rel_ascent = atoi(&s[i+1]);
+
 
 
       } else if (ss.find("granularity") == 0) {
