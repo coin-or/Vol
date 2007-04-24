@@ -494,7 +494,8 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
       // test terminating criteria
       const bool primal_feas = 
 	(pstar.viol < parm.primal_abs_precision);
-      const double gap = VolAbs(pstar.value - dstar.lcost);
+      //const double gap = VolAbs(pstar.value - dstar.lcost); 
+      const double gap = pstar.value - dstar.lcost;
       const bool small_gap = VolAbs(dstar.lcost) < 0.0001 ?
 	(gap < parm.gap_abs_precision) :
 	( (gap < parm.gap_abs_precision) || 
