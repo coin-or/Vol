@@ -502,19 +502,25 @@ VOL_problem::solve(VOL_user_hooks& hooks, const bool use_preset_dual)
 	  (gap/VolAbs(dstar.lcost) < parm.gap_rel_precision) );
       
       // test optimality
-      if (primal_feas && small_gap)
+      if (primal_feas && small_gap){
+	if (parm.printflag) printf(" small lp gap \n");
 	break;
+      }
 
       // test proving integer optimality
-      if (best_ub - dstar.lcost < parm.granularity)
+      if (best_ub - dstar.lcost < parm.granularity){
+	if (parm.printflag) printf(" small ip gap \n");
 	break;
+      }
 
       // test for non-improvement
       const int k = iter_ % parm.ascent_check_invl;
       if (iter_ > ascent_first_check) {
 	 if (dstar.lcost - lcost_sequence[k] <
-	     VolAbs(lcost_sequence[k]) * parm.minimum_rel_ascent)
-	    break;
+	     VolAbs(lcost_sequence[k]) * parm.minimum_rel_ascent){
+	   if (parm.printflag) printf(" small improvement \n");
+	   break;
+	 }
       }
       lcost_sequence[k] = dstar.lcost;
    }
