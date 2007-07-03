@@ -266,12 +266,6 @@ EXTRA_DIST = doc/ufldoc.bib doc/ufldoc.ps doc/ufldoc.tex \
 	$(am__append_1)
 
 ########################################################################
-#                           Extra Targets                              #
-########################################################################
-
-# We dont' have any test here
-
-########################################################################
 #                  Installation of the addlibs file                    #
 ########################################################################
 addlibsfile = vol_addlibs.txt
@@ -709,6 +703,16 @@ uninstall-info: uninstall-info-recursive
 	tags tags-recursive uninstall uninstall-am uninstall-info-am \
 	uninstall-local
 
+
+########################################################################
+#                           Extra Targets                              #
+########################################################################
+
+# We dont' have any test here
+test: unitTest
+
+unitTest: all
+	echo "********************* No test for Vol implemented *************************"
 
 install-exec-local:
 	$(install_sh_DATA) $(addlibsfile) $(DESTDIR)$(libdir)/$(addlibsfile)

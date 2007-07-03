@@ -58,6 +58,10 @@ EXTRA_DIST = \
 ########################################################################
 
 # We dont' have any test here
+test: unitTest
+
+unitTest: all
+	echo "********************* No test for Vol implemented *************************"
 
 ########################################################################
 #                  Installation of the addlibs file                    #
