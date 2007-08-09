@@ -1,0 +1,30 @@
+The ufl example shows how to use the Volume Algorithm to find very good
+solutions for the uncapacitated facility location problem. For further details
+read the postscript documentatation in the doc subdirectory.
+
+Prerequisites for installation:
+  - Read and edit the ${CoinDir}/Makefiles/Makefile.location as necessary
+  - Edit Makefile.ufl to set the optimization level
+  - make  
+     - must use gnu make. 
+     - Targets are put in subdirectories.
+       The name of the target subdirectory is derived using uname 
+       command and some compiler flags.
+
+To run ufl: 
+  - gunzip data.gz
+  - edit ufl.par
+    (the file 'data' contains a sample problem)
+  - Run the executable from the target directory. E.g., 
+    ./Linux-g/ufl
+
+Documentation on the ufl code can be found in the doc subdirectory. ufldoc.tex
+is a latex2e file, from which a postscript file can be created by running the
+following commands:
+  latex ufldoc
+  bibtex ufldoc
+  latex ufldoc
+  latex ufldoc
+  dvips -o ufldoc.ps ufldoc
+However, this is unnecessary, as the ufldoc.ps file is provided at the same
+place... 

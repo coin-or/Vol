@@ -1,0 +1,15 @@
+To build type:
+  make
+
+The build process creates two subdirectories, "dep" and one whose name
+combines the operating system name with the optimization level (e.g.,
+Linux-O6).  "dep" contains dependency files that describe how the
+source files depend on each other. "Linux-O6" contains the compiled
+object files and the final executable named "volume-lp". Also a link
+is created in the current directory to the final executable.
+
+To run the code first you need to uncompress the input file:
+  gunzip data.mps.gz
+
+Then run the code as:
+  ./volume-lp
