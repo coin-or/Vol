@@ -1,0 +1,14 @@
+
+The vollp example shows how to use the Volume algorithm to solve an LP (well,
+to get an approximate solution). In fact, the very same code is in the heart
+of the OsiVolSolverInterface code of Osi.
+
+To build the vollp example of using Vol
+  - make  
+     - must use gnu make. 
+
+ 
+To run vollp
+  - ./vollp
+    There are command line parameters. When none are specifed,
+    help text describing the parameters is provided.
