@@ -2,6 +2,7 @@
 // Corporation and others.  All Rights Reserved.
 #include <cstdlib>
 #include <cstdio>
+#include <cstring>
 #include <string>
 #include <cmath>
 
