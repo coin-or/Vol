@@ -1,0 +1,24 @@
+The ufl example shows how to use the Volume Algorithm to find very good
+solutions for the uncapacitated facility location problem. For further details
+read the postscript documentatation in the doc subdirectory.
+
+Prerequisites for installation:
+  - make  
+     - must use gnu make. 
+  
+
+To run ufl: 
+  - edit ufl.par
+    (the file 'data' contains a sample problem)
+  - type ufl
+
+Documentation on the ufl code can be found in the doc subdirectory. ufldoc.tex
+is a latex2e file, from which a postscript file can be created by running the
+following commands:
+  latex ufldoc
+  bibtex ufldoc
+  latex ufldoc
+  latex ufldoc
+  dvips -o ufldoc.ps ufldoc
+However, this is unnecessary, as the ufldoc.ps file is provided at the same
+place... 
