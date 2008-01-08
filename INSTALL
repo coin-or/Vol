@@ -15,19 +15,23 @@ You can obtain the source code for the Vol package in two ways:
    your machine, and output of "svn --version" must contain 
    "handles 'https' scheme".
 
-   Assuming that you want to download the code into a subdirectory
-   "COIN-Vol", you type
+   Assuming that you want to download the 'trunk' (where the
+   development happens) version of the code into a subdirectory
+   named "Vol", you type
 
-   svn co https://projects.coin-or.org/svn/Vol/trunk Coin-Vol
+   svn co https://projects.coin-or.org/svn/Vol/trunk Vol
 
-2. Download the tarball from http://www.coin-or.org/Tarballs/Vol and
-   extract it, for example, with
+   To download stable/1.1 you'd type:
 
-   gunzip Vol_2006Jun07.tgz
-   tar xvf Vol_2006Jun07.tar
+   svn co https://projects.coin-or.org/svn/Vol/stable/1.1 Vol
 
-   (Here "2006Jun07" is of course replaced by the string in the
-   tarball you downloaded.)
+   etc.
+
+2. Download the tarball from http://www.coin-or.org/download/source/Vol
+   and extract it. For example, for the release 1.1.0 you type
+
+   gunzip CoinUtils-1.1.0.tgz
+   tar xvf CoinUtils-1.1.0.tar
 
    More detailed download instructions can be found at
 
@@ -38,9 +42,12 @@ You can obtain the source code for the Vol package in two ways:
 **********************************************************************
 
 Go into the directory that you just downloaded or extracted (e.g.,
-Coin-Vol or Vol_2006Jun07).  Then you type
+Vol or Vol-1.1.0). Then create a build directory and configure the
+package by typing
 
-   ./configure
+   mkdir build
+   cd build
+   ../configure
 
 Note that you might have to specify additional options, in case you
 don't want to use the default choices that configure makes (e.g.,
@@ -68,12 +75,16 @@ In the directory where you ran the configure script:
 
    make
 
-2. To install the code, you type
+2. To test if the code works, you can type
+
+   make test
+
+3. To install the code, you type
 
    make install
 
-   After this, you will find the libraries and header
-   files in the "lib" and "include" subdirectory, respectively. 
+   After this, you will find the executables, libraries and header
+   files in the "bin", "lib" and "include" subdirectory, respectively.
 
 More information on the compilation and installation can be found at
 
@@ -91,35 +102,3 @@ find examples in the
 subdirectory, see also the information at
 
    https://projects.coin-or.org/BuildTools/wiki/user-examples
-
-
-
-==== 8< ======================================================
-
-From here on you find the original installation instructions for the
-previous GNU Makefile build system.  Most details have changed, but
-for now we keep it here so that possibly missing items might be found
-here.
-
-Prerequisites for installation:
-- must use gnu make
-- to make the documentation doxygen must be installed
-
-Targets are put in subdirectories, whose name is derived from the
-platform name (as returned by `uname`) and the optimization level
-(e.g., Linux-g).
-
-To build the library archive for the Volume Algorithm:
-  - read (and edit as needed) the top of the Makefile.
-  - 'make' (same as 'make install') to create the libvol.so (or
-    libvol.a) library archive in the target subdirectory and copies
-    the headers into InstallDir/include and the library into
-    InstallDir/lib.
-  - 'make doc' to create the html documentation of the classes in the
-    library and place them in doc/html.
-
-For a detailed description on how to use the Volume Algorithm library,
-read the documentation on the implementation for the uncapacitated
-facility location (ufl) problem in the doc subdirectory. To see the
-actual implementation of ufl check out the 'Examples' module.
-
