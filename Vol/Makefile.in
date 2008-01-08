@@ -51,7 +51,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-DIST_COMMON = $(am__configure_deps) \
+DIST_COMMON = README $(am__configure_deps) \
 	$(srcdir)/../BuildTools/Makemain.inc $(srcdir)/../config.guess \
 	$(srcdir)/../config.sub $(srcdir)/../install-sh \
 	$(srcdir)/../ltmain.sh $(srcdir)/../missing \
@@ -59,7 +59,7 @@ DIST_COMMON = $(am__configure_deps) \
 	$(srcdir)/vol_addlibs.txt.in $(top_srcdir)/configure \
 	$(top_srcdir)/examples/VolLp/Makefile.in \
 	$(top_srcdir)/examples/VolUfl/Makefile.in \
-	$(top_srcdir)/examples/Volume-LP/Makefile.in
+	$(top_srcdir)/examples/Volume-LP/Makefile.in AUTHORS INSTALL
 @HAVE_EXTERNALS_TRUE@am__append_1 = Externals
 @HAVE_EXTERNALS_TRUE@am__append_2 = .Externals-stamp
 subdir = .
