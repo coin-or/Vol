@@ -2,10 +2,13 @@
 /AUTHORS -text
 /LICENSE -text
 /README -text
+Vol/AUTHORS -text
+Vol/INSTALL -text
 Vol/LICENSE -text
 Vol/MSVisualStudio/v6/libVol/libVol.dsp -text
 Vol/MSVisualStudio/v7/libVol/libVol.vcproj -text
 Vol/MSVisualStudio/v8/libVol/libVol.vcproj -text
+Vol/README -text
 Vol/configure -text
 Vol/configure.ac -text
 Vol/doc/volDoc.bib -text
