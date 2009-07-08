@@ -44,7 +44,7 @@ AC_CANONICAL_BUILD
 AC_COIN_PROJECTDIR_INIT
 
 # Check if user wants to produce debugging code
-AC_COIN_DEBUG_COMPILE(Vol, CoinTime.hpp, libCoinUtils)
+AC_COIN_DEBUG_COMPILE(Vol)
 
 # Get the name of the C++ compiler and appropriate compiler options
 AC_COIN_PROG_CXX
@@ -56,7 +56,7 @@ AC_COIN_INIT_AUTO_TOOLS
 #                              COIN components                              #
 #############################################################################
 
-AC_COIN_HAS_PROJECT(CoinUtils)
+AC_COIN_HAS_PROJECT(CoinUtils, CoinTime.hpp, libCoinUtils)
 AC_COIN_HAS_PROJECT(Vol)
 
 ##############################################################################
