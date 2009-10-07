@@ -8,6 +8,8 @@ Vol/LICENSE -text
 Vol/MSVisualStudio/v6/libVol/libVol.dsp -text
 Vol/MSVisualStudio/v7/libVol/libVol.vcproj -text
 Vol/MSVisualStudio/v8/libVol/libVol.vcproj -text
+Vol/MSVisualStudio/v9/libVol/libVol.vcproj -text
+Vol/MSVisualStudio/v9/vol.sln -text
 Vol/README -text
 Vol/configure -text
 Vol/configure.ac -text
