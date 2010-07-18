@@ -61,20 +61,22 @@ EXTRA_DIST = \
 test: unitTest
 
 unitTest: all
-	echo "********************* No test for Vol implemented *************************"
+	@echo "********************* No test for Vol implemented *************************"
 
 ########################################################################
 #                  Installation of the addlibs file                    #
 ########################################################################
 
-addlibsfile = vol_addlibs.txt
-addlibsdir = $(prefix)/share/doc/coin/$(PACKAGE_NAME)/
+if COIN_HAS_PKGCONFIG
+addlibsdir = $(datadir)/coin/doc/Vol
+addlibs_DATA = vol_addlibs.txt
 
-install-exec-local: install-doc
-	$(install_sh_DATA) $(addlibsfile) $(DESTDIR)$(addlibsdir)/$(addlibsfile)
+vol_addlibs.txt : vol.pc
+	PKG_CONFIG_PATH=.:@COIN_PKG_CONFIG_PATH@ $(PKG_CONFIG) --libs vol > vol_addlibs.txt
+endif
 
-uninstall-local: uninstall-doc
-	rm -f $(DESTDIR)$(addlibsdir)/$(addlibsfile)
+pkgconfiglibdir = $(libdir)/pkgconfig
+pkgconfiglib_DATA = vol.pc
 
 ########################################################################
 #                         Maintainer Stuff                             #
@@ -83,4 +85,4 @@ uninstall-local: uninstall-doc
 # Files that are generated and should be cleaned with make distclean
 DISTCLEANFILES =
 
-include ../BuildTools/Makemain.inc
+include BuildTools/Makemain.inc

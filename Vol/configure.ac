@@ -12,7 +12,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT([Vol],[1.1trunk],[coin-vol@list.coin-or.org])
+AC_INIT([Vol],[trunk],[coin-vol@list.coin-or.org])
 
 AC_COPYRIGHT([
 Copyright 2006 International Business Machines and others.
@@ -41,7 +41,7 @@ AC_CANONICAL_BUILD
 # the source root directory contains definition of where to find those
 # externals.  The following macro ensures that those externals are
 # retrieved by svn if they are not there yet.
-AC_COIN_PROJECTDIR_INIT
+AC_COIN_PROJECTDIR_INIT(Vol)
 
 # Check if user wants to produce debugging code
 AC_COIN_DEBUG_COMPILE(Vol)
@@ -56,8 +56,25 @@ AC_COIN_INIT_AUTO_TOOLS
 #                              COIN components                              #
 #############################################################################
 
-AC_COIN_HAS_PROJECT(CoinUtils)
-AC_COIN_HAS_PROJECT(Vol)
+AC_COIN_HAS_MODULE(CoinUtils, [coinutils = trunk])
+if test $coin_has_coinutils != yes ; then
+  #if we have to use the fallback routines, then obviously it will not find CoinUtils dependencies
+  #thus, we check whether ThirdParty/Blas and ThirdParty/Lapack have been setup and
+  #assume that if present then they are dependencies of CoinUtils
+  AC_COIN_HAS_MODULE_FALLBACK(Blas,   [coinblas],   [../ThirdParty/Blas],   [required=0 dodefine=0 doconditional=0])
+  AC_COIN_HAS_MODULE_FALLBACK(Lapack, [coinlapack], [../ThirdParty/Lapack], [required=0 dodefine=0 doconditional=0])
+fi
+AC_COIN_HAS_MODULE_FALLBACK(CoinUtils, [coinutils], [../CoinUtils])
+if test $coin_has_coinutils != yes ; then
+  AC_MSG_ERROR([Required package CoinUtils not available.])
+fi
+#so if we had to do find Blas and Lapack separately, then add their linker flags to the CoinUtils flags
+#actually the libs may already be included in libCoinUtils, but we may still need the fortran library flags
+COINUTILS_LIBS="$COINUTILS_LIBS $LAPACK_LIBS $BLAS_LIBS"
+
+AC_COIN_HAS_MODULE(Osi,      [osi],            [required=0], [../Osi])
+AC_COIN_HAS_MODULE(OsiTests, [osi-unittests],  [required=0], [../Osi])
+AC_COIN_HAS_MODULE(Sample,   [coindatasample], [required=0], [../Data/Sample])
 
 ##############################################################################
 #                   VPATH links for example input files                      #
@@ -82,7 +99,7 @@ AC_CONFIG_FILES([Makefile
 		 examples/VolUfl/Makefile
 		 examples/Volume-LP/Makefile
                  src/Makefile
-		 vol_addlibs.txt])
+		 vol.pc vol-uninstalled.pc])
 
 # Finally, we let configure write all the output...
 AC_COIN_FINALIZE

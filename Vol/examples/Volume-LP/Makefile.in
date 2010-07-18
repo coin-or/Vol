@@ -33,6 +33,9 @@ VPATH = @srcdir@
 #  package.                                                              #
 ##########################################################################
 
+# The following is necessary under cygwin, if native compilers are used
+CYGPATH_W = @CYGPATH_W@
+
 # C++ Compiler command
 CXX = @CXX@
 
@@ -43,20 +46,17 @@ CXXFLAGS = @CXXFLAGS@
 CXXLINKFLAGS = @RPATH_FLAGS@
 
 # Directory with COIN header files
-COININCDIR = @abs_include_dir@
+COININCDIR = @abs_include_dir@/coin
 
 # Directory with COIN libraries
-COINLIBDIR = @abs_lib_dir@
+COINLIBDIR = @abs_lib_dir@/coin
 
-# Libraries necessary to link with Clp
-LIBS = -L$(COINLIBDIR) -lVol
+# Libraries necessary to link with Vol
+LIBS = @COINUTILS_LIBS@ -L`$(CYGPATH_W) $(COINLIBDIR)` -lVol @ADDLIBS@
 
 # Necessary Include dirs (we use the CYGPATH_W variables to allow
 # compilation with Windows compilers)
-INCL =  -I`$(CYGPATH_W) $(COININCDIR)` $(ADDINCFLAGS)
-
-# The following is necessary under cygwin, if native compilers are used
-CYGPATH_W = @CYGPATH_W@
+INCL =  -I`$(CYGPATH_W) $(COININCDIR)` @COINUTILS_CFLAGS@ $(ADDINCFLAGS)
 
 all: data.mps $(EXE)
 

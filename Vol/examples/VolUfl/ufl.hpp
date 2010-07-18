@@ -5,6 +5,7 @@
 
 #include <cstdio>
 #include <cfloat>
+#include <cstring>
 #include <string>
 
 #include "VolVolume.hpp"

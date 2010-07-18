@@ -13,8 +13,9 @@ AUTOMAKE_OPTIONS = foreign
 ########################################################################
 
 # Name of the library compiled in this directory.  We want it to be installed
-# in the 'lib' directory
-lib_LTLIBRARIES = libVol.la
+# in the 'lib/coin' directory
+coinlibdir = ${libdir}/coin
+coinlib_LTLIBRARIES = libVol.la
 
 # List all source files for this library, including headers
 libVol_la_SOURCES = VolVolume.cpp VolVolume.hpp
@@ -31,9 +32,7 @@ libVol_la_LDFLAGS = $(LT_LDFLAGS)
 # "cygpath" stuff is necessary to compile with native compilers on Windows.
 # "top_srcdir" refers to the basic directory for the main package that is
 # being compiled.
-AM_CPPFLAGS = \
-	-I`$(CYGPATH_W) $(COINUTILSSRCDIR)/src` \
-	-I`$(CYGPATH_W) $(COINUTILSOBJDIR)/inc`
+AM_CPPFLAGS = ${COINUTILS_CFLAGS}
 
 # This line is necessary to allow VPATH compilation with MS compilers
 # on Cygwin
@@ -44,7 +43,6 @@ DEFAULT_INCLUDES = -I. -I`$(CYGPATH_W) $(srcdir)` -I$(top_builddir)/inc
 ########################################################################
 
 # Here list all the header files that are required by a user of the library,
-# and that therefore should be installed in 'install/coin'
+# and that therefore should be installed in 'include/coin'
 includecoindir = $(includedir)/coin
-includecoin_HEADERS = \
-	VolVolume.hpp
+includecoin_HEADERS = VolVolume.hpp

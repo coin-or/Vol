@@ -35,7 +35,8 @@ Vol/examples/Volume-LP/lpc.cpp -text
 Vol/examples/Volume-LP/lpc.h -text
 Vol/examples/Volume-LP/reader.cpp -text
 Vol/examples/Volume-LP/reader.h -text
-Vol/vol_addlibs.txt.in -text
+Vol/vol-uninstalled.pc.in -text
+Vol/vol.pc.in -text
 /config.guess -text
 /config.sub -text
 /configure -text
