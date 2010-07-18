@@ -2,41 +2,34 @@
 # All Rights Reserved.
 # This file is distributed under the Common Public License.
 
-## $Id$
+## $Id: Makefile.am 1152 2007-12-28 03:59:07Z andreasw $
 
 # Author:  Andreas Waechter           IBM    2006-04-13
 
 AUTOMAKE_OPTIONS = foreign
 
-if COIN_HAS_OSI
-SUBDIRS = OsiVol
-endif
-
 ########################################################################
-#                               libVol                                 #
+#                             libOsiVol                                #
 ########################################################################
 
-# Name of the library compiled in this directory.  We want it to be installed
-# in the 'lib/coin' directory
+# Name of the library compiled in this directory.
 coinlibdir = ${libdir}/coin
-coinlib_LTLIBRARIES = libVol.la
+coinlib_LTLIBRARIES = libOsiVol.la
 
 # List all source files for this library, including headers
-libVol_la_SOURCES = VolVolume.cpp VolVolume.hpp
+libOsiVol_la_SOURCES = \
+	OsiVolSolverInterface.cpp OsiVolSolverInterface.hpp \
+	OsiVolSolverInterfaceIO.cpp
 
 # This is for libtool (on Windows)
-libVol_la_LDFLAGS = $(LT_LDFLAGS)
-
-########################################################################
-#                            Additional flags                          #
-########################################################################
-
+libOsiVol_la_LDFLAGS = $(LT_LDFLAGS)
 
 # Here list all include flags, relative to this "srcdir" directory.  This
 # "cygpath" stuff is necessary to compile with native compilers on Windows.
 # "top_srcdir" refers to the basic directory for the main package that is
 # being compiled.
-AM_CPPFLAGS = ${COINUTILS_CFLAGS}
+AM_CPPFLAGS = ${COINUTILS_CFLAGS} ${OSI_CFLAGS} \
+	-I`$(CYGPATH_W) $(srcdir)/..`
 
 # This line is necessary to allow VPATH compilation with MS compilers
 # on Cygwin
@@ -47,6 +40,6 @@ DEFAULT_INCLUDES = -I. -I`$(CYGPATH_W) $(srcdir)` -I$(top_builddir)/inc
 ########################################################################
 
 # Here list all the header files that are required by a user of the library,
-# and that therefore should be installed in 'include/coin'
+# and that therefore should be installed in 'includedir/coin'
 includecoindir = $(includedir)/coin
-includecoin_HEADERS = VolVolume.hpp
+includecoin_HEADERS = OsiVolSolverInterface.hpp

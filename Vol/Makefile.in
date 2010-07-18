@@ -60,7 +60,10 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/../config.guess \
 	$(srcdir)/vol.pc.in $(top_srcdir)/configure \
 	$(top_srcdir)/examples/VolLp/Makefile.in \
 	$(top_srcdir)/examples/VolUfl/Makefile.in \
-	$(top_srcdir)/examples/Volume-LP/Makefile.in AUTHORS INSTALL
+	$(top_srcdir)/examples/Volume-LP/Makefile.in \
+	$(top_srcdir)/inc/config_vol.h.in \
+	$(top_srcdir)/src/OsiVol/osi-vol-uninstalled.pc.in AUTHORS \
+	INSTALL
 @HAVE_EXTERNALS_TRUE@am__append_1 = Externals
 @HAVE_EXTERNALS_TRUE@am__append_2 = .Externals-stamp
 subdir = .
@@ -72,8 +75,10 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno configure.status.lineno
 mkinstalldirs = $(install_sh) -d
+CONFIG_HEADER = $(top_builddir)/inc/config_vol.h
 CONFIG_CLEAN_FILES = examples/VolLp/Makefile examples/VolUfl/Makefile \
-	examples/Volume-LP/Makefile vol.pc vol-uninstalled.pc
+	examples/Volume-LP/Makefile vol.pc vol-uninstalled.pc \
+	osi-vol-uninstalled.pc
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -133,6 +138,8 @@ COINUTILS_DATA = @COINUTILS_DATA@
 COINUTILS_LIBS = @COINUTILS_LIBS@
 COIN_HAS_COINUTILS_FALSE = @COIN_HAS_COINUTILS_FALSE@
 COIN_HAS_COINUTILS_TRUE = @COIN_HAS_COINUTILS_TRUE@
+COIN_HAS_NETLIB_FALSE = @COIN_HAS_NETLIB_FALSE@
+COIN_HAS_NETLIB_TRUE = @COIN_HAS_NETLIB_TRUE@
 COIN_HAS_OSITESTS_FALSE = @COIN_HAS_OSITESTS_FALSE@
 COIN_HAS_OSITESTS_TRUE = @COIN_HAS_OSITESTS_TRUE@
 COIN_HAS_OSI_FALSE = @COIN_HAS_OSI_FALSE@
@@ -184,6 +191,9 @@ MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 MPICC = @MPICC@
 MPICXX = @MPICXX@
+NETLIB_CFLAGS = @NETLIB_CFLAGS@
+NETLIB_DATA = @NETLIB_DATA@
+NETLIB_LIBS = @NETLIB_LIBS@
 OBJEXT = @OBJEXT@
 OPT_CFLAGS = @OPT_CFLAGS@
 OPT_CXXFLAGS = @OPT_CXXFLAGS@
@@ -352,6 +362,23 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(srcdir) && $(AUTOCONF)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
+
+inc/config_vol.h: inc/stamp-h1
+	@if test ! -f $@; then \
+	  rm -f inc/stamp-h1; \
+	  $(MAKE) inc/stamp-h1; \
+	else :; fi
+
+inc/stamp-h1: $(top_srcdir)/inc/config_vol.h.in $(top_builddir)/config.status
+	@rm -f inc/stamp-h1
+	cd $(top_builddir) && $(SHELL) ./config.status inc/config_vol.h
+$(top_srcdir)/inc/config_vol.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps) 
+	cd $(top_srcdir) && $(AUTOHEADER)
+	rm -f inc/stamp-h1
+	touch $@
+
+distclean-hdr:
+	-rm -f inc/config_vol.h inc/stamp-h1
 examples/VolLp/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/VolLp/Makefile.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 examples/VolUfl/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/VolUfl/Makefile.in
@@ -361,6 +388,8 @@ examples/Volume-LP/Makefile: $(top_builddir)/config.status $(top_srcdir)/example
 vol.pc: $(top_builddir)/config.status $(srcdir)/vol.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 vol-uninstalled.pc: $(top_builddir)/config.status $(srcdir)/vol-uninstalled.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+osi-vol-uninstalled.pc: $(top_builddir)/config.status $(top_srcdir)/src/OsiVol/osi-vol-uninstalled.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
@@ -542,7 +571,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/. $(distdir)/.. $(distdir)/BuildTools $(distdir)/doc $(distdir)/examples/VolLp $(distdir)/examples/VolUfl $(distdir)/examples/VolUfl/doc $(distdir)/examples/Volume-LP $(distdir)/examples/Volume-LP/Doc
+	$(mkdir_p) $(distdir)/. $(distdir)/.. $(distdir)/BuildTools $(distdir)/doc $(distdir)/examples/VolLp $(distdir)/examples/VolUfl $(distdir)/examples/VolUfl/doc $(distdir)/examples/Volume-LP $(distdir)/examples/Volume-LP/Doc $(distdir)/inc $(distdir)/src/OsiVol
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -721,8 +750,8 @@ clean-am: clean-generic clean-libtool mostlyclean-am
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -f Makefile
-distclean-am: clean-am distclean-generic distclean-libtool \
-	distclean-tags
+distclean-am: clean-am distclean-generic distclean-hdr \
+	distclean-libtool distclean-tags
 
 dvi: dvi-recursive
 
@@ -736,7 +765,7 @@ info-am:
 
 install-data-am: install-addlibsDATA install-pkgconfiglibDATA
 
-install-exec-am:
+install-exec-am: install-exec-local
 
 install-info: install-info-recursive
 
@@ -762,7 +791,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-addlibsDATA uninstall-info-am \
+uninstall-am: uninstall-addlibsDATA uninstall-info-am uninstall-local \
 	uninstall-pkgconfiglibDATA
 
 uninstall-info: uninstall-info-recursive
@@ -771,32 +800,36 @@ uninstall-info: uninstall-info-recursive
 	check-am clean clean-generic clean-libtool clean-recursive \
 	ctags ctags-recursive dist dist-all dist-bzip2 dist-gzip \
 	dist-shar dist-tarZ dist-zip distcheck distclean \
-	distclean-generic distclean-libtool distclean-recursive \
-	distclean-tags distcleancheck distdir distuninstallcheck dvi \
-	dvi-am html html-am info info-am install install-addlibsDATA \
-	install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am install-man \
+	distclean-generic distclean-hdr distclean-libtool \
+	distclean-recursive distclean-tags distcleancheck distdir \
+	distuninstallcheck dvi dvi-am html html-am info info-am \
+	install install-addlibsDATA install-am install-data \
+	install-data-am install-exec install-exec-am \
+	install-exec-local install-info install-info-am install-man \
 	install-pkgconfiglibDATA install-strip installcheck \
 	installcheck-am installdirs installdirs-am maintainer-clean \
 	maintainer-clean-generic maintainer-clean-recursive \
 	mostlyclean mostlyclean-generic mostlyclean-libtool \
 	mostlyclean-recursive pdf pdf-am ps ps-am tags tags-recursive \
 	uninstall uninstall-addlibsDATA uninstall-am uninstall-info-am \
-	uninstall-pkgconfiglibDATA
+	uninstall-local uninstall-pkgconfiglibDATA
 
 
 ########################################################################
 #                           Extra Targets                              #
 ########################################################################
 
-# We dont' have any test here
-test: unitTest
+test: all
+	cd test; $(MAKE) test
 
-unitTest: all
-	@echo "********************* No test for Vol implemented *************************"
+unitTest: test
 
 @COIN_HAS_PKGCONFIG_TRUE@vol_addlibs.txt : vol.pc
 @COIN_HAS_PKGCONFIG_TRUE@	PKG_CONFIG_PATH=.:@COIN_PKG_CONFIG_PATH@ $(PKG_CONFIG) --libs vol > vol_addlibs.txt
+
+install-exec-local: install-doc
+
+uninstall-local: uninstall-doc
 
 install-doc: $(DocFiles)
 	test -z "$(DocInstallDir)" || $(mkdir_p) "$(DESTDIR)$(DocInstallDir)"

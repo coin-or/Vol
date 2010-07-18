@@ -75,6 +75,7 @@ COINUTILS_LIBS="$COINUTILS_LIBS $LAPACK_LIBS $BLAS_LIBS"
 AC_COIN_HAS_MODULE(Osi,      [osi],            [required=0], [../Osi])
 AC_COIN_HAS_MODULE(OsiTests, [osi-unittests],  [required=0], [../Osi])
 AC_COIN_HAS_MODULE(Sample,   [coindatasample], [required=0], [../Data/Sample])
+AC_COIN_HAS_MODULE(Netlib,   [coindatanetlib], [required=0], [../Data/Netlib])
 
 ##############################################################################
 #                   VPATH links for example input files                      #
@@ -99,7 +100,19 @@ AC_CONFIG_FILES([Makefile
 		 examples/VolUfl/Makefile
 		 examples/Volume-LP/Makefile
                  src/Makefile
+                 src/OsiVol/Makefile
+                 test/Makefile
 		 vol.pc vol-uninstalled.pc])
+
+if test $coin_has_osi = yes ; then
+  AC_CONFIG_FILES([src/OsiVol/osi-vol.pc
+                   osi-vol-uninstalled.pc:src/OsiVol/osi-vol-uninstalled.pc.in])
+fi
+
+# even though we do not use the config_vol.h file, we config a header file here
+# this is for the compilation of OsiVol, which works much better with -DHAVE_CONFIG_H
+# instead of a list of single defines (-DPACKAGE_NAME=...) in the compiler flags
+AC_CONFIG_HEADER([inc/config_vol.h])
 
 # Finally, we let configure write all the output...
 AC_COIN_FINALIZE

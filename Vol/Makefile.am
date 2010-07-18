@@ -57,11 +57,10 @@ EXTRA_DIST = \
 #                           Extra Targets                              #
 ########################################################################
 
-# We dont' have any test here
-test: unitTest
+test: all
+	cd test; $(MAKE) test
 
-unitTest: all
-	@echo "********************* No test for Vol implemented *************************"
+unitTest: test
 
 ########################################################################
 #                  Installation of the addlibs file                    #
@@ -77,6 +76,10 @@ endif
 
 pkgconfiglibdir = $(libdir)/pkgconfig
 pkgconfiglib_DATA = vol.pc
+
+install-exec-local: install-doc
+
+uninstall-local: uninstall-doc
 
 ########################################################################
 #                         Maintainer Stuff                             #
