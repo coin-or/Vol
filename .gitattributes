@@ -10,8 +10,11 @@ Vol/MSVisualStudio/v7/libVol/libVol.vcproj -text
 Vol/MSVisualStudio/v8/libVol/libVol.vcproj -text
 Vol/MSVisualStudio/v9/libVol/libVol.vcproj -text
 Vol/README -text
+Vol/config.guess -text
+Vol/config.sub -text
 Vol/configure -text
 Vol/configure.ac -text
+Vol/depcomp -text
 Vol/doc/volDoc.bib -text
 Vol/doc/volDoc.pdf -text
 Vol/doc/volDoc.ps -text
@@ -36,6 +39,9 @@ Vol/examples/Volume-LP/lpc.h -text
 Vol/examples/Volume-LP/reader.cpp -text
 Vol/examples/Volume-LP/reader.h -text
 Vol/inc/config_vol.h.in -text
+Vol/install-sh -text
+Vol/ltmain.sh -text
+Vol/missing -text
 Vol/src/OsiVol/Makefile.am -text
 Vol/src/OsiVol/Makefile.in -text
 Vol/src/OsiVol/OsiVolSolverInterface.cpp -text
