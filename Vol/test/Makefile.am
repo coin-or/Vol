@@ -18,7 +18,7 @@ noinst_PROGRAMS = osiUnitTest
 
 osiUnitTest_SOURCES = osiUnitTest.cpp OsiVolSolverInterfaceTest.cpp
 
-osiUnitTest_LDADD = ../src/libVol.la ../src/OsiVol/libOsiVol.la
+osiUnitTest_LDADD = ../src/OsiVol/libOsiVol.la ../src/libVol.la
 
 LIBS += $(COINUTILS_LIBS) $(OSI_LIBS) $(OSITESTS_LIBS)
 

@@ -63,8 +63,9 @@ am__osiUnitTest_SOURCES_DIST = osiUnitTest.cpp \
 @COIN_HAS_OSITESTS_TRUE@	osiUnitTest.$(OBJEXT) \
 @COIN_HAS_OSITESTS_TRUE@	OsiVolSolverInterfaceTest.$(OBJEXT)
 osiUnitTest_OBJECTS = $(am_osiUnitTest_OBJECTS)
-@COIN_HAS_OSITESTS_TRUE@osiUnitTest_DEPENDENCIES = ../src/libVol.la \
-@COIN_HAS_OSITESTS_TRUE@	../src/OsiVol/libOsiVol.la
+@COIN_HAS_OSITESTS_TRUE@osiUnitTest_DEPENDENCIES =  \
+@COIN_HAS_OSITESTS_TRUE@	../src/OsiVol/libOsiVol.la \
+@COIN_HAS_OSITESTS_TRUE@	../src/libVol.la
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/inc
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -250,7 +251,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AUTOMAKE_OPTIONS = foreign
 @COIN_HAS_OSITESTS_TRUE@osiUnitTest_SOURCES = osiUnitTest.cpp OsiVolSolverInterfaceTest.cpp
-@COIN_HAS_OSITESTS_TRUE@osiUnitTest_LDADD = ../src/libVol.la ../src/OsiVol/libOsiVol.la
+@COIN_HAS_OSITESTS_TRUE@osiUnitTest_LDADD = ../src/OsiVol/libOsiVol.la ../src/libVol.la
 @COIN_HAS_OSITESTS_TRUE@AM_CPPFLAGS = $(COINUTILS_CFLAGS) $(OSI_CFLAGS) $(OSITESTS_CFLAGS) \
 @COIN_HAS_OSITESTS_TRUE@	-I`$(CYGPATH_W) $(srcdir)/../src` \
 @COIN_HAS_OSITESTS_TRUE@	-I`$(CYGPATH_W) $(srcdir)/../src/OsiVol`
