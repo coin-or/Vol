@@ -21,6 +21,7 @@
 # Author:  Andreas Waechter           IBM    2006-04-13
 
 
+
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -61,7 +62,7 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(coinlibdir)" \
-	"$(DESTDIR)$(includecoindir)"
+	"$(DESTDIR)$(pkgconfiglibdir)" "$(DESTDIR)$(includecoindir)"
 coinlibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(coinlib_LTLIBRARIES)
 libOsiVol_la_LIBADD =
@@ -88,6 +89,8 @@ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libOsiVol_la_SOURCES)
 DIST_SOURCES = $(libOsiVol_la_SOURCES)
+pkgconfiglibDATA_INSTALL = $(INSTALL_DATA)
+DATA = $(pkgconfiglib_DATA)
 includecoinHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(includecoin_HEADERS)
 ETAGS = etags
@@ -130,6 +133,7 @@ COIN_HAS_PKGCONFIG_TRUE = @COIN_HAS_PKGCONFIG_TRUE@
 COIN_HAS_SAMPLE_FALSE = @COIN_HAS_SAMPLE_FALSE@
 COIN_HAS_SAMPLE_TRUE = @COIN_HAS_SAMPLE_TRUE@
 COIN_PKG_CONFIG_PATH = @COIN_PKG_CONFIG_PATH@
+COIN_PKG_CONFIG_PATH_UNINSTALLED = @COIN_PKG_CONFIG_PATH_UNINSTALLED@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -299,6 +303,8 @@ DEFAULT_INCLUDES = -I. -I`$(CYGPATH_W) $(srcdir)` -I$(top_builddir)/inc
 # and that therefore should be installed in 'includedir/coin'
 includecoindir = $(includedir)/coin
 includecoin_HEADERS = OsiVolSolverInterface.hpp
+pkgconfiglibdir = $(libdir)/pkgconfig
+pkgconfiglib_DATA = osi-vol.pc
 all: all-am
 
 .SUFFIXES:
@@ -403,6 +409,23 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
+install-pkgconfiglibDATA: $(pkgconfiglib_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(pkgconfiglibdir)" || $(mkdir_p) "$(DESTDIR)$(pkgconfiglibdir)"
+	@list='$(pkgconfiglib_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(pkgconfiglibDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(pkgconfiglibdir)/$$f'"; \
+	  $(pkgconfiglibDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(pkgconfiglibdir)/$$f"; \
+	done
+
+uninstall-pkgconfiglibDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(pkgconfiglib_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(pkgconfiglibdir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(pkgconfiglibdir)/$$f"; \
+	done
 install-includecoinHEADERS: $(includecoin_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(includecoindir)" || $(mkdir_p) "$(DESTDIR)$(includecoindir)"
@@ -498,9 +521,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES) $(DATA) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(coinlibdir)" "$(DESTDIR)$(includecoindir)"; do \
+	for dir in "$(DESTDIR)$(coinlibdir)" "$(DESTDIR)$(pkgconfiglibdir)" "$(DESTDIR)$(includecoindir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -548,7 +571,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-coinlibLTLIBRARIES install-includecoinHEADERS
+install-data-am: install-coinlibLTLIBRARIES install-includecoinHEADERS \
+	install-pkgconfiglibDATA
 
 install-exec-am:
 
@@ -577,7 +601,8 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-coinlibLTLIBRARIES \
-	uninstall-includecoinHEADERS uninstall-info-am
+	uninstall-includecoinHEADERS uninstall-info-am \
+	uninstall-pkgconfiglibDATA
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean \
 	clean-coinlibLTLIBRARIES clean-generic clean-libtool ctags \
@@ -586,12 +611,14 @@ uninstall-am: uninstall-coinlibLTLIBRARIES \
 	html-am info info-am install install-am \
 	install-coinlibLTLIBRARIES install-data install-data-am \
 	install-exec install-exec-am install-includecoinHEADERS \
-	install-info install-info-am install-man install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
+	install-info install-info-am install-man \
+	install-pkgconfiglibDATA install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-coinlibLTLIBRARIES \
-	uninstall-includecoinHEADERS uninstall-info-am
+	uninstall-includecoinHEADERS uninstall-info-am \
+	uninstall-pkgconfiglibDATA
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
