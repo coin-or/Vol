@@ -76,6 +76,9 @@ install-data-hook:
 	@$(mkdir_p) "$(addlibsdir)"
 	PKG_CONFIG_PATH=@COIN_PKG_CONFIG_PATH@ \
 	$(PKG_CONFIG) --libs vol > $(addlibsdir)/vol_addlibs.txt
+
+uninstall-hook:
+	rm -f $(addlibsdir)/vol_addlibs.txt
 endif
 
 install-exec-local: install-doc

@@ -724,6 +724,7 @@ maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 @COIN_HAS_PKGCONFIG_FALSE@install-data-hook:
+@COIN_HAS_PKGCONFIG_FALSE@uninstall-hook:
 clean: clean-recursive
 
 clean-am: clean-generic clean-libtool mostlyclean-am
@@ -776,6 +777,8 @@ ps-am:
 
 uninstall-am: uninstall-info-am uninstall-local \
 	uninstall-pkgconfiglibDATA
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 
 uninstall-info: uninstall-info-recursive
 
@@ -794,8 +797,8 @@ uninstall-info: uninstall-info-recursive
 	maintainer-clean-generic maintainer-clean-recursive \
 	mostlyclean mostlyclean-generic mostlyclean-libtool \
 	mostlyclean-recursive pdf pdf-am ps ps-am tags tags-recursive \
-	uninstall uninstall-am uninstall-info-am uninstall-local \
-	uninstall-pkgconfiglibDATA
+	uninstall uninstall-am uninstall-hook uninstall-info-am \
+	uninstall-local uninstall-pkgconfiglibDATA
 
 
 ########################################################################
@@ -811,6 +814,9 @@ unitTest: test
 @COIN_HAS_PKGCONFIG_TRUE@	@$(mkdir_p) "$(addlibsdir)"
 @COIN_HAS_PKGCONFIG_TRUE@	PKG_CONFIG_PATH=@COIN_PKG_CONFIG_PATH@ \
 @COIN_HAS_PKGCONFIG_TRUE@	$(PKG_CONFIG) --libs vol > $(addlibsdir)/vol_addlibs.txt
+
+@COIN_HAS_PKGCONFIG_TRUE@uninstall-hook:
+@COIN_HAS_PKGCONFIG_TRUE@	rm -f $(addlibsdir)/vol_addlibs.txt
 
 install-exec-local: install-doc
 
