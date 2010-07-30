@@ -826,7 +826,8 @@ OsiVolSolverInterface::getMatrixByCol() const {
 // Problem information methods (results)
 //#############################################################################
 
-std::vector<double*> OsiVolSolverInterface::getDualRays(int /*maxNumRays*/) const
+std::vector<double*> OsiVolSolverInterface::getDualRays(int /*maxNumRays*/,
+							bool /*fullRay*/) const
 {
   // *FIXME* : must write the method -LL
   throw CoinError("method is not yet written", "getDualRays",
