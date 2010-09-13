@@ -56,7 +56,7 @@ COININCDIR = @abs_include_dir@/coin
 COINLIBDIR = @abs_lib_dir@/coin
 
 # Libraries necessary to link with Vol
-LIBS = @COINUTILS_LIBS@ -L`$(CYGPATH_W) $(COINLIBDIR)` -lVol @ADDLIBS@
+LIBS = -L`$(CYGPATH_W) $(COINLIBDIR)` -L`$(CYGPATH_W) $(COINLIBDIR)/ThirdParty` -lVol @VOLLIB_LIBS@
 
 # Necessary Include dirs (we use the CYGPATH_W variables to allow
 # compilation with Windows compilers)

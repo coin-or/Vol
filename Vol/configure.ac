@@ -56,11 +56,11 @@ AC_COIN_INIT_AUTO_TOOLS
 #                              COIN components                              #
 #############################################################################
 
-AC_COIN_HAS_MODULE(CoinUtils, [coinutils = trunk])
-AC_COIN_HAS_MODULE(Osi,       [osi],            [required=0])
-AC_COIN_HAS_MODULE(OsiTests,  [osi-unittests],  [required=0])
-AC_COIN_HAS_MODULE(Sample,    [coindatasample], [required=0])
-AC_COIN_HAS_MODULE(Netlib,    [coindatanetlib], [required=0])
+AC_COIN_HAS_PACKAGE(CoinUtils, [coinutils = trunk], [VolLib])
+AC_COIN_HAS_PACKAGE(Osi,       [osi],               [OsiVolLib])
+AC_COIN_HAS_PACKAGE(OsiTests,  [osi-unittests])
+AC_COIN_HAS_PACKAGE(Sample,    [coindatasample])
+AC_COIN_HAS_PACKAGE(Netlib,    [coindatanetlib])
 
 ##############################################################################
 #                   VPATH links for example input files                      #

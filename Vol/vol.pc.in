@@ -6,6 +6,6 @@ includedir=@includedir@/coin
 Name: Vol
 Description: Volume Algorithm
 Version: @PACKAGE_VERSION@
-Libs: -L${libdir} -lVol @PCADDLIBS@
+Libs: -L${libdir} -lVol @VOLLIB_PCLIBS@
 Cflags: -I${includedir}
-Requires: @REQUIREDPACKAGES@
+Requires: @VOLLIB_PCREQUIRES@

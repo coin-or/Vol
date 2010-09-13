@@ -4,6 +4,6 @@ libdir=@ABSBUILDDIR@/src
 Name: Vol
 Description: Volume Algorithm
 Version: @PACKAGE_VERSION@
-Libs: -L${libdir} -lVol @PCADDLIBS@
+Libs: -L${libdir} -lVol @VOLLIB_PCLIBS@
 Cflags: -I@abs_source_dir@/src -I@ABSBUILDDIR@/inc
-Requires: @REQUIREDPACKAGES@
+Requires: @VOLLIB_PCREQUIRES@

@@ -20,7 +20,7 @@ osiUnitTest_SOURCES = osiUnitTest.cpp OsiVolSolverInterfaceTest.cpp
 
 osiUnitTest_LDADD = ../src/OsiVol/libOsiVol.la ../src/libVol.la
 
-LIBS += $(COINUTILS_LIBS) $(OSI_LIBS) $(OSITESTS_LIBS)
+LIBS += $(OSITESTS_LIBS) $(OSIVOLLIB_LIBS) $(VOLLIB_LIBS)
 
 AM_CPPFLAGS = $(COINUTILS_CFLAGS) $(OSI_CFLAGS) $(OSITESTS_CFLAGS) \
 	-I`$(CYGPATH_W) $(srcdir)/../src` \

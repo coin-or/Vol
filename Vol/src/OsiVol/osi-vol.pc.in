@@ -6,6 +6,6 @@ includedir=@includedir@/coin
 Name: OsiVol
 Description: COIN-OR Open Solver Interface for Vol
 Version: @PACKAGE_VERSION@
-Libs: -L${libdir} -lOsiVol
+Libs: -L${libdir} -lOsiVol @OSIVOLLIB_PCLIBS@
 Cflags: -I${includedir}
-Requires: osi vol
+Requires: vol @OSIVOLLIB_PCREQUIRES@
