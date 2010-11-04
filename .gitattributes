@@ -1,5 +1,6 @@
 * text=auto !eol
 /AUTHORS -text
+/Dependencies -text
 /LICENSE -text
 /README -text
 Vol/AUTHORS -text
