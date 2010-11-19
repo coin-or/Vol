@@ -20789,7 +20789,7 @@ echo "${ECHO_T}yes: $COINUTILS_VERSIONS" >&6
 
 
   else
-    COINUTILS_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors coinutils = trunk`
+    COINUTILS_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors "coinutils = trunk"`
       coin_has_coinutils=notGiven
         echo "$as_me:$LINENO: result: not given: $COINUTILS_PKG_ERRORS" >&5
 echo "${ECHO_T}not given: $COINUTILS_PKG_ERRORS" >&6
@@ -20883,7 +20883,7 @@ while test $coin_has_coinutils = notGiven ; do
       fi
 
       # read dependencies from $pcfile, filter it, and add to list of projects that need to be processed next
-      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\?>\?=[ 	]*[^ 	]\+//g'`
+      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\{0,1\}>\{0,1\}=[ 	]*[^ 	]\{0,\}//g'`
       nextprojtoprocess="$nextprojtoprocess $projrequires"
 
       # remember that we have processed $proj
@@ -21105,7 +21105,7 @@ echo "${ECHO_T}yes: $OSI_VERSIONS" >&6
 
 
   else
-    OSI_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors osi`
+    OSI_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors "osi"`
       coin_has_osi=notGiven
         echo "$as_me:$LINENO: result: not given: $OSI_PKG_ERRORS" >&5
 echo "${ECHO_T}not given: $OSI_PKG_ERRORS" >&6
@@ -21199,7 +21199,7 @@ while test $coin_has_osi = notGiven ; do
       fi
 
       # read dependencies from $pcfile, filter it, and add to list of projects that need to be processed next
-      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\?>\?=[ 	]*[^ 	]\+//g'`
+      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\{0,1\}>\{0,1\}=[ 	]*[^ 	]\{0,\}//g'`
       nextprojtoprocess="$nextprojtoprocess $projrequires"
 
       # remember that we have processed $proj
@@ -21411,7 +21411,7 @@ echo "${ECHO_T}yes: $OSITESTS_VERSIONS" >&6
 
 
   else
-    OSITESTS_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors osi-unittests`
+    OSITESTS_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors "osi-unittests"`
       coin_has_ositests=notGiven
         echo "$as_me:$LINENO: result: not given: $OSITESTS_PKG_ERRORS" >&5
 echo "${ECHO_T}not given: $OSITESTS_PKG_ERRORS" >&6
@@ -21502,7 +21502,7 @@ while test $coin_has_ositests = notGiven ; do
       fi
 
       # read dependencies from $pcfile, filter it, and add to list of projects that need to be processed next
-      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\?>\?=[ 	]*[^ 	]\+//g'`
+      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\{0,1\}>\{0,1\}=[ 	]*[^ 	]\{0,\}//g'`
       nextprojtoprocess="$nextprojtoprocess $projrequires"
 
       # remember that we have processed $proj
@@ -21700,7 +21700,7 @@ echo "${ECHO_T}yes: $SAMPLE_VERSIONS" >&6
 
 
   else
-    SAMPLE_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors coindatasample`
+    SAMPLE_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors "coindatasample"`
       coin_has_sample=notGiven
         echo "$as_me:$LINENO: result: not given: $SAMPLE_PKG_ERRORS" >&5
 echo "${ECHO_T}not given: $SAMPLE_PKG_ERRORS" >&6
@@ -21791,7 +21791,7 @@ while test $coin_has_sample = notGiven ; do
       fi
 
       # read dependencies from $pcfile, filter it, and add to list of projects that need to be processed next
-      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\?>\?=[ 	]*[^ 	]\+//g'`
+      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\{0,1\}>\{0,1\}=[ 	]*[^ 	]\{0,\}//g'`
       nextprojtoprocess="$nextprojtoprocess $projrequires"
 
       # remember that we have processed $proj
@@ -21989,7 +21989,7 @@ echo "${ECHO_T}yes: $NETLIB_VERSIONS" >&6
 
 
   else
-    NETLIB_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors coindatanetlib`
+    NETLIB_PKG_ERRORS=`$PKG_CONFIG $pkg_short_errors --errors-to-stdout --print-errors "coindatanetlib"`
       coin_has_netlib=notGiven
         echo "$as_me:$LINENO: result: not given: $NETLIB_PKG_ERRORS" >&5
 echo "${ECHO_T}not given: $NETLIB_PKG_ERRORS" >&6
@@ -22080,7 +22080,7 @@ while test $coin_has_netlib = notGiven ; do
       fi
 
       # read dependencies from $pcfile, filter it, and add to list of projects that need to be processed next
-      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\?>\?=[ 	]*[^ 	]\+//g'`
+      projrequires=`sed -n -e 's/Requires://gp' "$pcfile" | sed -e 's/<\{0,1\}>\{0,1\}=[ 	]*[^ 	]\{0,\}//g'`
       nextprojtoprocess="$nextprojtoprocess $projrequires"
 
       # remember that we have processed $proj
