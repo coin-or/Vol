@@ -69,6 +69,10 @@ unitTest: test
 pkgconfiglibdir = $(libdir)/pkgconfig
 pkgconfiglib_DATA = vol.pc
 
+if COIN_HAS_OSI
+pkgconfiglib_DATA += osi-vol.pc
+endif
+
 if COIN_HAS_PKGCONFIG
 addlibsdir = $(DESTDIR)$(datadir)/coin/doc/Vol
 	

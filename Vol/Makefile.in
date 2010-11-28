@@ -52,6 +52,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@COIN_HAS_OSI_TRUE@am__append_1 = osi-vol.pc
 DIST_COMMON = README $(am__configure_deps) \
 	$(srcdir)/BuildTools/Makemain.inc $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/vol-uninstalled.pc.in \
@@ -60,11 +61,11 @@ DIST_COMMON = README $(am__configure_deps) \
 	$(top_srcdir)/examples/VolUfl/Makefile.in \
 	$(top_srcdir)/examples/Volume-LP/Makefile.in \
 	$(top_srcdir)/inc/config_vol.h.in \
-	$(top_srcdir)/src/OsiVol/osi-vol-uninstalled.pc.in AUTHORS \
-	INSTALL config.guess config.sub depcomp install-sh ltmain.sh \
-	missing
-@HAVE_EXTERNALS_TRUE@am__append_1 = Externals
-@HAVE_EXTERNALS_TRUE@am__append_2 = .Externals-stamp
+	$(top_srcdir)/src/OsiVol/osi-vol-uninstalled.pc.in \
+	$(top_srcdir)/src/OsiVol/osi-vol.pc.in AUTHORS INSTALL \
+	config.guess config.sub depcomp install-sh ltmain.sh missing
+@HAVE_EXTERNALS_TRUE@am__append_2 = Externals
+@HAVE_EXTERNALS_TRUE@am__append_3 = .Externals-stamp
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -77,7 +78,7 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/inc/config_vol.h
 CONFIG_CLEAN_FILES = examples/VolLp/Makefile examples/VolUfl/Makefile \
 	examples/Volume-LP/Makefile vol.pc vol-uninstalled.pc \
-	osi-vol-uninstalled.pc
+	osi-vol.pc osi-vol-uninstalled.pc
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -313,13 +314,13 @@ EXTRA_DIST = doc/ufldoc.bib doc/ufldoc.ps doc/ufldoc.tex \
 	examples/VolUfl/ufl.par examples/VolUfl/data.gz \
 	examples/VolUfl/ufl.hpp examples/VolLp/Makefile.in \
 	examples/VolLp/INSTALL examples/VolLp/vollp.cpp \
-	$(am__append_1)
+	$(am__append_2)
 
 ########################################################################
 #                  Installation of the addlibs file                    #
 ########################################################################
 pkgconfiglibdir = $(libdir)/pkgconfig
-pkgconfiglib_DATA = vol.pc
+pkgconfiglib_DATA = vol.pc $(am__append_1)
 @COIN_HAS_PKGCONFIG_TRUE@addlibsdir = $(DESTDIR)$(datadir)/coin/doc/Vol
 
 ########################################################################
@@ -327,7 +328,7 @@ pkgconfiglib_DATA = vol.pc
 ########################################################################
 
 # Files that are generated and should be cleaned with make distclean
-DISTCLEANFILES = $(am__append_2) $(VPATH_DISTCLEANFILES)
+DISTCLEANFILES = $(am__append_3) $(VPATH_DISTCLEANFILES)
 DocFiles = README AUTHORS LICENSE
 DocInstallDir = $(datadir)/coin/doc/$(PACKAGE_NAME)
 all: all-recursive
@@ -392,6 +393,8 @@ examples/Volume-LP/Makefile: $(top_builddir)/config.status $(top_srcdir)/example
 vol.pc: $(top_builddir)/config.status $(srcdir)/vol.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 vol-uninstalled.pc: $(top_builddir)/config.status $(srcdir)/vol-uninstalled.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+osi-vol.pc: $(top_builddir)/config.status $(top_srcdir)/src/OsiVol/osi-vol.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 osi-vol-uninstalled.pc: $(top_builddir)/config.status $(top_srcdir)/src/OsiVol/osi-vol-uninstalled.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@

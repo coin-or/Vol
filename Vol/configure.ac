@@ -90,7 +90,7 @@ AC_CONFIG_FILES([Makefile
 		 vol.pc vol-uninstalled.pc])
 
 if test $coin_has_osi = yes ; then
-  AC_CONFIG_FILES([src/OsiVol/osi-vol.pc
+  AC_CONFIG_FILES([osi-vol.pc:src/OsiVol/osi-vol.pc.in
                    osi-vol-uninstalled.pc:src/OsiVol/osi-vol-uninstalled.pc.in])
 fi
 
