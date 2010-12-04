@@ -18,9 +18,11 @@ noinst_PROGRAMS = osiUnitTest
 
 osiUnitTest_SOURCES = osiUnitTest.cpp OsiVolSolverInterfaceTest.cpp
 
-osiUnitTest_LDADD = ../src/OsiVol/libOsiVol.la ../src/libVol.la
+osiUnitTest_LDADD = ../src/OsiVol/libOsiVol.la ../src/libVol.la \
+  $(OSITESTS_LIBS) $(OSIVOLLIB_LIBS) $(VOLLIB_LIBS)
 
-LIBS += $(OSITESTS_LIBS) $(OSIVOLLIB_LIBS) $(VOLLIB_LIBS)
+osiUnitTest_DEPENDENCIES = ../src/OsiVol/libOsiVol.la ../src/libVol.la \
+  $(OSITESTS_DEPENDENCIES) $(OSIVOLLIB_DEPENDENCIES) $(VOLLIB_DEPENDENCIES)
 
 AM_CPPFLAGS = $(COINUTILS_CFLAGS) $(OSI_CFLAGS) $(OSITESTS_CFLAGS) \
 	-I`$(CYGPATH_W) $(srcdir)/../src` \
@@ -29,9 +31,6 @@ AM_CPPFLAGS = $(COINUTILS_CFLAGS) $(OSI_CFLAGS) $(OSITESTS_CFLAGS) \
 osiunittestflags =
 if COIN_HAS_SAMPLE
   osiunittestflags += -mpsDir=`$(CYGPATH_W) $(SAMPLE_DATA)`
-endif
-if COIN_HAS_NETLIB
-  osiunittestflags += -netlibDir=`$(CYGPATH_W) $(NETLIB_DATA)` -testOsiSolverInterface
 endif
 
 test: osiUnitTest$(EXEEXT)

@@ -56,11 +56,10 @@ AC_COIN_INIT_AUTO_TOOLS
 #                              COIN components                              #
 #############################################################################
 
-AC_COIN_CHECK_PACKAGE(CoinUtils, [coinutils = trunk], [VolLib])
-AC_COIN_CHECK_PACKAGE(Osi,       [osi],               [OsiVolLib])
+AC_COIN_CHECK_PACKAGE(CoinUtils, [coinutils],     [VolLib])
+AC_COIN_CHECK_PACKAGE(Osi,       [osi],           [OsiVolLib])
 AC_COIN_CHECK_PACKAGE(OsiTests,  [osi-unittests])
 AC_COIN_CHECK_PACKAGE(Sample,    [coindatasample])
-AC_COIN_CHECK_PACKAGE(Netlib,    [coindatanetlib])
 
 ##############################################################################
 #                   VPATH links for example input files                      #
