@@ -9,6 +9,9 @@ Vol/LICENSE -text
 Vol/MSVisualStudio/v6/libVol/libVol.dsp -text
 Vol/MSVisualStudio/v7/libVol/libVol.vcproj -text
 Vol/MSVisualStudio/v8/libVol/libVol.vcproj -text
+Vol/MSVisualStudio/v9/OsiVolUnitTest/OsiVolUnitTest.vcproj -text
+Vol/MSVisualStudio/v9/Vol.sln -text
+Vol/MSVisualStudio/v9/libOsiVol/libOsiVol.vcproj -text
 Vol/MSVisualStudio/v9/libVol/libVol.vcproj -text
 Vol/README -text
 Vol/config.guess -text

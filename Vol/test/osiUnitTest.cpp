@@ -69,6 +69,10 @@ bool processParameters (int argc, const char **argv,
   pathTmp += dirsep ;
   pathTmp += "Data" ;
   pathTmp += dirsep ;
+# ifdef COIN_MSVS
+  // Visual Studio builds are deeper in the directory tree
+  pathTmp = "..\\..\\"+pathTmp ;
+# endif
 
   parms["-mpsDir"] = pathTmp + "Sample"  ;
   parms["-netlibDir"] = pathTmp + "Netlib" ;
