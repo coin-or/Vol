@@ -62,6 +62,18 @@ test: all
 
 unitTest: test
 
+# Doxygen documentation
+
+doxydoc:
+	doxygen doxydoc/doxygen.conf
+
+clean-doxydoc:
+	( cd doxydoc ; rm -rf html *.log *.tag )
+
+clean-local: clean-doxydoc
+
+.PHONY: doxydoc
+
 ########################################################################
 #                  Installation of the addlibs file                    #
 ########################################################################

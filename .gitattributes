@@ -23,6 +23,7 @@ Vol/doc/volDoc.bib -text
 Vol/doc/volDoc.pdf -text
 Vol/doc/volDoc.ps -text
 Vol/doc/volDoc.tex -text
+Vol/doxydoc/doxygen.conf.in -text
 Vol/examples/VolLp/INSTALL -text
 Vol/examples/VolLp/Makefile.in -text
 Vol/examples/VolLp/vollp.cpp -text
@@ -64,6 +65,6 @@ Vol/vol.pc.in -text
 /configure -text
 /configure.ac -text
 /depcomp -text
-doxydoc/doxygen.conf -text
+doxydoc/doxygen.conf.in -text
 /install-sh -text
 /missing -text

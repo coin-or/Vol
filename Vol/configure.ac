@@ -73,6 +73,9 @@ AC_COIN_VPATH_LINK(examples/VolUfl/data.gz)
 AC_COIN_VPATH_LINK(examples/Volume-LP/data.mps.gz)
 AC_COIN_VPATH_LINK(examples/Volume-LP/lp.par)
 
+# Setup doxygen
+AC_COIN_DOXYGEN(CoinUtils Osi)
+
 ##############################################################################
 #                   Finishing up by writing all the output                   #
 ##############################################################################
@@ -86,6 +89,7 @@ AC_CONFIG_FILES([Makefile
                  src/Makefile
                  src/OsiVol/Makefile
                  test/Makefile
+                 doxydoc/doxygen.conf
 		 vol.pc vol-uninstalled.pc])
 
 if test $coin_has_osi = yes ; then

@@ -57,6 +57,7 @@ DIST_COMMON = README $(am__configure_deps) \
 	$(srcdir)/BuildTools/Makemain.inc $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/vol-uninstalled.pc.in \
 	$(srcdir)/vol.pc.in $(top_srcdir)/configure \
+	$(top_srcdir)/doxydoc/doxygen.conf.in \
 	$(top_srcdir)/examples/VolLp/Makefile.in \
 	$(top_srcdir)/examples/VolUfl/Makefile.in \
 	$(top_srcdir)/examples/Volume-LP/Makefile.in \
@@ -77,8 +78,8 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/inc/config_vol.h
 CONFIG_CLEAN_FILES = examples/VolLp/Makefile examples/VolUfl/Makefile \
-	examples/Volume-LP/Makefile vol.pc vol-uninstalled.pc \
-	osi-vol.pc osi-vol-uninstalled.pc
+	examples/Volume-LP/Makefile doxydoc/doxygen.conf vol.pc \
+	vol-uninstalled.pc osi-vol.pc osi-vol-uninstalled.pc
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -279,6 +280,12 @@ build_alias = @build_alias@
 build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
+coin_doxy_excludes = @coin_doxy_excludes@
+coin_doxy_logname = @coin_doxy_logname@
+coin_doxy_tagfiles = @coin_doxy_tagfiles@
+coin_doxy_tagname = @coin_doxy_tagname@
+coin_doxy_usedot = @coin_doxy_usedot@
+coin_have_doxygen = @coin_have_doxygen@
 datadir = @datadir@
 exec_prefix = @exec_prefix@
 have_autoconf = @have_autoconf@
@@ -410,6 +417,8 @@ examples/VolLp/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/Vo
 examples/VolUfl/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/VolUfl/Makefile.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 examples/Volume-LP/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/Volume-LP/Makefile.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+doxydoc/doxygen.conf: $(top_builddir)/config.status $(top_srcdir)/doxydoc/doxygen.conf.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 vol.pc: $(top_builddir)/config.status $(srcdir)/vol.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
@@ -582,7 +591,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/. $(distdir)/BuildTools $(distdir)/doc $(distdir)/examples/VolLp $(distdir)/examples/VolUfl $(distdir)/examples/VolUfl/doc $(distdir)/examples/Volume-LP $(distdir)/examples/Volume-LP/Doc $(distdir)/inc $(distdir)/src/OsiVol
+	$(mkdir_p) $(distdir)/. $(distdir)/BuildTools $(distdir)/doc $(distdir)/doxydoc $(distdir)/examples/VolLp $(distdir)/examples/VolUfl $(distdir)/examples/VolUfl/doc $(distdir)/examples/Volume-LP $(distdir)/examples/Volume-LP/Doc $(distdir)/inc $(distdir)/src/OsiVol
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -756,7 +765,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-recursive
 
-clean-am: clean-generic clean-libtool mostlyclean-am
+clean-am: clean-generic clean-libtool clean-local mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
@@ -812,9 +821,9 @@ uninstall-am: uninstall-info-am uninstall-local \
 uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am am--refresh check \
-	check-am clean clean-generic clean-libtool clean-recursive \
-	ctags ctags-recursive dist dist-all dist-bzip2 dist-gzip \
-	dist-shar dist-tarZ dist-zip distcheck distclean \
+	check-am clean clean-generic clean-libtool clean-local \
+	clean-recursive ctags ctags-recursive dist dist-all dist-bzip2 \
+	dist-gzip dist-shar dist-tarZ dist-zip distcheck distclean \
 	distclean-generic distclean-hdr distclean-libtool \
 	distclean-recursive distclean-tags distcleancheck distdir \
 	distuninstallcheck dvi dvi-am html html-am info info-am \
@@ -838,6 +847,18 @@ test: all
 	cd test; $(MAKE) test
 
 unitTest: test
+
+# Doxygen documentation
+
+doxydoc:
+	doxygen doxydoc/doxygen.conf
+
+clean-doxydoc:
+	( cd doxydoc ; rm -rf html *.log *.tag )
+
+clean-local: clean-doxydoc
+
+.PHONY: doxydoc
 
 install-data-hook:
 	@$(mkdir_p) "$(addlibsdir)"
