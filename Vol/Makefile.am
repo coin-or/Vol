@@ -62,6 +62,18 @@ test: all
 
 unitTest: test
 
+# Doxygen documentation
+
+doxydoc:
+	doxygen doxydoc/doxygen.conf
+
+clean-doxydoc:
+	( cd doxydoc ; rm -rf html *.log *.tag )
+
+clean-local: clean-doxydoc
+
+.PHONY: doxydoc
+
 ########################################################################
 #                  Installation of the addlibs file                    #
 ########################################################################
@@ -69,17 +81,23 @@ unitTest: test
 pkgconfiglibdir = $(libdir)/pkgconfig
 pkgconfiglib_DATA = vol.pc
 
-if COIN_HAS_PKGCONFIG
+if COIN_HAS_OSI
+pkgconfiglib_DATA += osi-vol.pc
+endif
+
 addlibsdir = $(DESTDIR)$(datadir)/coin/doc/Vol
 	
 install-data-hook:
 	@$(mkdir_p) "$(addlibsdir)"
+if COIN_HAS_PKGCONFIG
 	PKG_CONFIG_PATH=@COIN_PKG_CONFIG_PATH@ \
 	$(PKG_CONFIG) --libs vol > $(addlibsdir)/vol_addlibs.txt
+else
+	echo -L@abs_lib_dir@ -lVol @VOLLIB_LIBS_INSTALLED@ > $(addlibsdir)/vol_addlibs.txt
+endif
 
 uninstall-hook:
 	rm -f $(addlibsdir)/vol_addlibs.txt
-endif
 
 install-exec-local: install-doc
 

@@ -56,11 +56,10 @@ AC_COIN_INIT_AUTO_TOOLS
 #                              COIN components                              #
 #############################################################################
 
-AC_COIN_CHECK_PACKAGE(CoinUtils, [coinutils = trunk], [VolLib])
-AC_COIN_CHECK_PACKAGE(Osi,       [osi],               [OsiVolLib])
+AC_COIN_CHECK_PACKAGE(CoinUtils, [coinutils],     [VolLib])
+AC_COIN_CHECK_PACKAGE(Osi,       [osi],           [OsiVolLib])
 AC_COIN_CHECK_PACKAGE(OsiTests,  [osi-unittests])
 AC_COIN_CHECK_PACKAGE(Sample,    [coindatasample])
-AC_COIN_CHECK_PACKAGE(Netlib,    [coindatanetlib])
 
 ##############################################################################
 #                   VPATH links for example input files                      #
@@ -73,6 +72,9 @@ AC_COIN_VPATH_LINK(examples/VolUfl/ufl.par)
 AC_COIN_VPATH_LINK(examples/VolUfl/data.gz)
 AC_COIN_VPATH_LINK(examples/Volume-LP/data.mps.gz)
 AC_COIN_VPATH_LINK(examples/Volume-LP/lp.par)
+
+# Setup doxygen
+AC_COIN_DOXYGEN(CoinUtils Osi)
 
 ##############################################################################
 #                   Finishing up by writing all the output                   #
@@ -87,10 +89,11 @@ AC_CONFIG_FILES([Makefile
                  src/Makefile
                  src/OsiVol/Makefile
                  test/Makefile
+                 doxydoc/doxygen.conf
 		 vol.pc vol-uninstalled.pc])
 
 if test $coin_has_osi = yes ; then
-  AC_CONFIG_FILES([src/OsiVol/osi-vol.pc
+  AC_CONFIG_FILES([osi-vol.pc:src/OsiVol/osi-vol.pc.in
                    osi-vol-uninstalled.pc:src/OsiVol/osi-vol-uninstalled.pc.in])
 fi
 

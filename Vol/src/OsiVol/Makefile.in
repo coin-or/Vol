@@ -21,7 +21,6 @@
 # Author:  Andreas Waechter           IBM    2006-04-13
 
 
-
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -46,7 +45,7 @@ build_triplet = @build@
 host_triplet = @host@
 subdir = src/OsiVol
 DIST_COMMON = $(includecoin_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/osi-vol.pc.in
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.ac
@@ -54,7 +53,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/inc/config_vol.h
-CONFIG_CLEAN_FILES = osi-vol.pc
+CONFIG_CLEAN_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -62,7 +61,7 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(coinlibdir)" \
-	"$(DESTDIR)$(pkgconfiglibdir)" "$(DESTDIR)$(includecoindir)"
+	"$(DESTDIR)$(includecoindir)"
 coinlibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(coinlib_LTLIBRARIES)
 libOsiVol_la_LIBADD =
@@ -89,8 +88,6 @@ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libOsiVol_la_SOURCES)
 DIST_SOURCES = $(libOsiVol_la_SOURCES)
-pkgconfiglibDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(pkgconfiglib_DATA)
 includecoinHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(includecoin_HEADERS)
 ETAGS = etags
@@ -118,12 +115,18 @@ CCDEPMODE = @CCDEPMODE@
 CDEFS = @CDEFS@
 CFLAGS = @CFLAGS@
 COINUTILS_CFLAGS = @COINUTILS_CFLAGS@
+COINUTILS_CFLAGS_INSTALLED = @COINUTILS_CFLAGS_INSTALLED@
 COINUTILS_DATA = @COINUTILS_DATA@
+COINUTILS_DATA_INSTALLED = @COINUTILS_DATA_INSTALLED@
+COINUTILS_DEPENDENCIES = @COINUTILS_DEPENDENCIES@
 COINUTILS_LIBS = @COINUTILS_LIBS@
+COINUTILS_LIBS_INSTALLED = @COINUTILS_LIBS_INSTALLED@
+COIN_CC_IS_CL_FALSE = @COIN_CC_IS_CL_FALSE@
+COIN_CC_IS_CL_TRUE = @COIN_CC_IS_CL_TRUE@
+COIN_CXX_IS_CL_FALSE = @COIN_CXX_IS_CL_FALSE@
+COIN_CXX_IS_CL_TRUE = @COIN_CXX_IS_CL_TRUE@
 COIN_HAS_COINUTILS_FALSE = @COIN_HAS_COINUTILS_FALSE@
 COIN_HAS_COINUTILS_TRUE = @COIN_HAS_COINUTILS_TRUE@
-COIN_HAS_NETLIB_FALSE = @COIN_HAS_NETLIB_FALSE@
-COIN_HAS_NETLIB_TRUE = @COIN_HAS_NETLIB_TRUE@
 COIN_HAS_OSITESTS_FALSE = @COIN_HAS_OSITESTS_FALSE@
 COIN_HAS_OSITESTS_TRUE = @COIN_HAS_OSITESTS_TRUE@
 COIN_HAS_OSI_FALSE = @COIN_HAS_OSI_FALSE@
@@ -176,22 +179,30 @@ MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 MPICC = @MPICC@
 MPICXX = @MPICXX@
-NETLIB_CFLAGS = @NETLIB_CFLAGS@
-NETLIB_DATA = @NETLIB_DATA@
-NETLIB_LIBS = @NETLIB_LIBS@
 OBJEXT = @OBJEXT@
 OPT_CFLAGS = @OPT_CFLAGS@
 OPT_CXXFLAGS = @OPT_CXXFLAGS@
 OSITESTS_CFLAGS = @OSITESTS_CFLAGS@
+OSITESTS_CFLAGS_INSTALLED = @OSITESTS_CFLAGS_INSTALLED@
 OSITESTS_DATA = @OSITESTS_DATA@
+OSITESTS_DATA_INSTALLED = @OSITESTS_DATA_INSTALLED@
+OSITESTS_DEPENDENCIES = @OSITESTS_DEPENDENCIES@
 OSITESTS_LIBS = @OSITESTS_LIBS@
+OSITESTS_LIBS_INSTALLED = @OSITESTS_LIBS_INSTALLED@
 OSIVOLLIB_CFLAGS = @OSIVOLLIB_CFLAGS@
+OSIVOLLIB_CFLAGS_INSTALLED = @OSIVOLLIB_CFLAGS_INSTALLED@
+OSIVOLLIB_DEPENDENCIES = @OSIVOLLIB_DEPENDENCIES@
 OSIVOLLIB_LIBS = @OSIVOLLIB_LIBS@
+OSIVOLLIB_LIBS_INSTALLED = @OSIVOLLIB_LIBS_INSTALLED@
 OSIVOLLIB_PCLIBS = @OSIVOLLIB_PCLIBS@
 OSIVOLLIB_PCREQUIRES = @OSIVOLLIB_PCREQUIRES@
 OSI_CFLAGS = @OSI_CFLAGS@
+OSI_CFLAGS_INSTALLED = @OSI_CFLAGS_INSTALLED@
 OSI_DATA = @OSI_DATA@
+OSI_DATA_INSTALLED = @OSI_DATA_INSTALLED@
+OSI_DEPENDENCIES = @OSI_DEPENDENCIES@
 OSI_LIBS = @OSI_LIBS@
+OSI_LIBS_INSTALLED = @OSI_LIBS_INSTALLED@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -204,14 +215,21 @@ PKG_CONFIG = @PKG_CONFIG@
 RANLIB = @RANLIB@
 RPATH_FLAGS = @RPATH_FLAGS@
 SAMPLE_CFLAGS = @SAMPLE_CFLAGS@
+SAMPLE_CFLAGS_INSTALLED = @SAMPLE_CFLAGS_INSTALLED@
 SAMPLE_DATA = @SAMPLE_DATA@
+SAMPLE_DATA_INSTALLED = @SAMPLE_DATA_INSTALLED@
+SAMPLE_DEPENDENCIES = @SAMPLE_DEPENDENCIES@
 SAMPLE_LIBS = @SAMPLE_LIBS@
+SAMPLE_LIBS_INSTALLED = @SAMPLE_LIBS_INSTALLED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
 VOLLIB_CFLAGS = @VOLLIB_CFLAGS@
+VOLLIB_CFLAGS_INSTALLED = @VOLLIB_CFLAGS_INSTALLED@
+VOLLIB_DEPENDENCIES = @VOLLIB_DEPENDENCIES@
 VOLLIB_LIBS = @VOLLIB_LIBS@
+VOLLIB_LIBS_INSTALLED = @VOLLIB_LIBS_INSTALLED@
 VOLLIB_PCLIBS = @VOLLIB_PCLIBS@
 VOLLIB_PCREQUIRES = @VOLLIB_PCREQUIRES@
 VOL_SVN_REV = @VOL_SVN_REV@
@@ -244,6 +262,12 @@ build_alias = @build_alias@
 build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
+coin_doxy_excludes = @coin_doxy_excludes@
+coin_doxy_logname = @coin_doxy_logname@
+coin_doxy_tagfiles = @coin_doxy_tagfiles@
+coin_doxy_tagname = @coin_doxy_tagname@
+coin_doxy_usedot = @coin_doxy_usedot@
+coin_have_doxygen = @coin_have_doxygen@
 datadir = @datadir@
 exec_prefix = @exec_prefix@
 have_autoconf = @have_autoconf@
@@ -310,8 +334,6 @@ DEFAULT_INCLUDES = -I. -I`$(CYGPATH_W) $(srcdir)` -I$(top_builddir)/inc
 # and that therefore should be installed in 'includedir/coin'
 includecoindir = $(includedir)/coin
 includecoin_HEADERS = OsiVolSolverInterface.hpp
-pkgconfiglibdir = $(libdir)/pkgconfig
-pkgconfiglib_DATA = osi-vol.pc
 all: all-am
 
 .SUFFIXES:
@@ -345,8 +367,6 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-osi-vol.pc: $(top_builddir)/config.status $(srcdir)/osi-vol.pc.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-coinlibLTLIBRARIES: $(coinlib_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	test -z "$(coinlibdir)" || $(mkdir_p) "$(DESTDIR)$(coinlibdir)"
@@ -416,23 +436,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-pkgconfiglibDATA: $(pkgconfiglib_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(pkgconfiglibdir)" || $(mkdir_p) "$(DESTDIR)$(pkgconfiglibdir)"
-	@list='$(pkgconfiglib_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(pkgconfiglibDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(pkgconfiglibdir)/$$f'"; \
-	  $(pkgconfiglibDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(pkgconfiglibdir)/$$f"; \
-	done
-
-uninstall-pkgconfiglibDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(pkgconfiglib_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(pkgconfiglibdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(pkgconfiglibdir)/$$f"; \
-	done
 install-includecoinHEADERS: $(includecoin_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(includecoindir)" || $(mkdir_p) "$(DESTDIR)$(includecoindir)"
@@ -528,9 +531,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(DATA) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(coinlibdir)" "$(DESTDIR)$(pkgconfiglibdir)" "$(DESTDIR)$(includecoindir)"; do \
+	for dir in "$(DESTDIR)$(coinlibdir)" "$(DESTDIR)$(includecoindir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -578,8 +581,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-coinlibLTLIBRARIES install-includecoinHEADERS \
-	install-pkgconfiglibDATA
+install-data-am: install-coinlibLTLIBRARIES install-includecoinHEADERS
 
 install-exec-am:
 
@@ -608,8 +610,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-coinlibLTLIBRARIES \
-	uninstall-includecoinHEADERS uninstall-info-am \
-	uninstall-pkgconfiglibDATA
+	uninstall-includecoinHEADERS uninstall-info-am
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean \
 	clean-coinlibLTLIBRARIES clean-generic clean-libtool ctags \
@@ -618,14 +619,12 @@ uninstall-am: uninstall-coinlibLTLIBRARIES \
 	html-am info info-am install install-am \
 	install-coinlibLTLIBRARIES install-data install-data-am \
 	install-exec install-exec-am install-includecoinHEADERS \
-	install-info install-info-am install-man \
-	install-pkgconfiglibDATA install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
+	install-info install-info-am install-man install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-coinlibLTLIBRARIES \
-	uninstall-includecoinHEADERS uninstall-info-am \
-	uninstall-pkgconfiglibDATA
+	uninstall-includecoinHEADERS uninstall-info-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
