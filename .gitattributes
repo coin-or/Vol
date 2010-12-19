@@ -65,6 +65,6 @@ Vol/vol.pc.in -text
 /configure -text
 /configure.ac -text
 /depcomp -text
-doxydoc/doxygen.conf -text
+doxydoc/doxygen.conf.in -text
 /install-sh -text
 /missing -text
