@@ -5,6 +5,7 @@ includedir=@includedir@/coin
 
 Name: Vol
 Description: Volume Algorithm
+URL: https://projects.coin-or.org/Vol
 Version: @PACKAGE_VERSION@
 Libs: -L${libdir} -lVol @VOLLIB_PCLIBS@
 Cflags: -I${includedir}

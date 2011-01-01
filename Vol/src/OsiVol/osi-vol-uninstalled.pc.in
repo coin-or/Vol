@@ -3,6 +3,7 @@ libdir=@ABSBUILDDIR@/src/OsiVol
 
 Name: OsiVol
 Description: COIN-OR Open Solver Interface for Vol
+URL: https://projects.coin-or.org/Osi
 Version: @PACKAGE_VERSION@
 Libs: ${libdir}/libOsiVol.la @OSIVOLLIB_PCLIBS@
 Cflags: -I@abs_source_dir@/src/OsiVol

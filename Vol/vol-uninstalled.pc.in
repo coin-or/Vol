@@ -3,6 +3,7 @@ libdir=@ABSBUILDDIR@/src
 
 Name: Vol
 Description: Volume Algorithm
+URL: https://projects.coin-or.org/Vol
 Version: @PACKAGE_VERSION@
 Libs: ${libdir}/libVol.la @VOLLIB_PCLIBS@
 Cflags: -I@abs_source_dir@/src -I@ABSBUILDDIR@/inc
