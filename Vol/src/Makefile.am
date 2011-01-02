@@ -17,9 +17,8 @@ endif
 ########################################################################
 
 # Name of the library compiled in this directory.  We want it to be installed
-# in the 'lib/coin' directory
-coinlibdir = ${libdir}/coin
-coinlib_LTLIBRARIES = libVol.la
+# in $libdir
+lib_LTLIBRARIES = libVol.la
 
 # List all source files for this library, including headers
 libVol_la_SOURCES = VolVolume.cpp VolVolume.hpp
