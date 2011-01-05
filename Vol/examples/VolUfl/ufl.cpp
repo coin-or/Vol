@@ -1,5 +1,7 @@
 // Copyright (C) 2000, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 // This is an implementation of the Volume algorithm for uncapacitated
 // facility location problems. See the references
 // F. Barahona, R. Anbil, "The Volume algorithm: producing primal solutions

@@ -1,3 +1,11 @@
+/*
+  Copyright (C) 2000, International Business Machines
+  Corporation and others.  All Rights Reserved.
+  This code is licensed under the terms of the Eclipse Public License (EPL).
+
+  $Id$
+*/
+
 #ifndef __LPC_H__
 #define __LPC_H__
 
