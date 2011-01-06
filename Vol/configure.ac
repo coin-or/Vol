@@ -12,7 +12,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT([Vol],[trunk],[coin-vol@list.coin-or.org])
+AC_INIT([Vol],[1.3],[coin-vol@list.coin-or.org])
 
 AC_COPYRIGHT([
 Copyright 2006 International Business Machines and others.
