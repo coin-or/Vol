@@ -77,3 +77,12 @@
 
 /* Version number of project */
 #undef VOL_VERSION
+
+/* Major Version number of project */
+#undef VOL_VERSION_MAJOR
+
+/* Minor Version number of project */
+#undef VOL_VERSION_MINOR
+
+/* Release Version number of project */
+#undef VOL_VERSION_RELEASE
