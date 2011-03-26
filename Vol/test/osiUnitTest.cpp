@@ -17,6 +17,8 @@
 #include <map>
 
 #include "OsiUnitTests.hpp"
+#include "OsiCuts.hpp"
+#include "OsiRowCutDebugger.hpp"
 
 #include "CoinError.hpp"
 #include "CoinHelperFunctions.hpp"
