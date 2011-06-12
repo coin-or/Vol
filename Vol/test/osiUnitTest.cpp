@@ -24,7 +24,6 @@ using namespace OsiUnitTest;
 //----------------------------------------------------------------
 
 int main (int argc, const char *argv[])
-
 {
   bool exception = false;
 
@@ -42,6 +41,7 @@ int main (int argc, const char *argv[])
   note at head of file.
   */
   WindowsErrorPopupBlocker();
+  outcomes.clear();
 
   /*
   Process command line parameters.
@@ -92,6 +92,8 @@ int main (int argc, const char *argv[])
 
   if (nerrors > nerrors_expected)
     std::cerr << "Tests completed with " << nerrors - nerrors_expected << " unexpected errors." << std::endl ;
+  else if( exception )
+    std::cerr << "Tests completed with exception\n";
   else
     std::cerr << "All tests completed successfully\n";
 
