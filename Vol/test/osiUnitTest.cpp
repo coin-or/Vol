@@ -1,7 +1,7 @@
-// $Id$
 // Copyright (C) 2000, International Business Machines
 // Corporation and others.  All Rights Reserved.
 // This code is licensed under the terms of the Eclipse Public License (EPL).
+// $Id$
 
 #include "CoinPragma.hpp"
 #include "OsiConfig.h"
@@ -25,8 +25,6 @@ using namespace OsiUnitTest;
 
 int main (int argc, const char *argv[])
 {
-  bool exception = false;
-
   /*
   Start off with various bits of initialisation that don't really belong
   anywhere else.
@@ -53,32 +51,25 @@ int main (int argc, const char *argv[])
   std::string mpsDir = parms["-mpsDir"] ;
   std::string netlibDir = parms["-netlibDir"] ;
 
-  try {
-    /*
-      Test Osi{Row,Col}Cut routines.
-     */
-    {
-      OsiVolSolverInterface volSi;
-      testingMessage( "Testing OsiRowCut with OsiVolSolverInterface\n" );
-      OsiRowCutUnitTest(&volSi,mpsDir);
-    }
-    {
-      OsiVolSolverInterface volSi;
-      testingMessage( "Testing OsiColCut with OsiVolSolverInterface\n" );
-      OsiColCutUnitTest(&volSi,mpsDir);
-    }
-
-    /*
-      Run the OsiVol class test, which calls the OsiSolverInterfaceCommonUnitTest.
-     */
-    testingMessage( "Testing OsiVolSolverInterface\n" );
-    OsiVolSolverInterfaceUnitTest(mpsDir,netlibDir);
-  } catch (CoinError& error) {
-    std::cout.flush();
-    std::cerr << "Caught CoinError exception: ";
-    error.print(true);
-    exception = true;
+  /*
+    Test Osi{Row,Col}Cut routines.
+   */
+  {
+    OsiVolSolverInterface volSi;
+    testingMessage( "Testing OsiRowCut with OsiVolSolverInterface\n" );
+    OSIUNITTEST_CATCH_ERROR(OsiRowCutUnitTest(&volSi,mpsDir), {}, "vol", "rowcut unittest");
   }
+  {
+    OsiVolSolverInterface volSi;
+    testingMessage( "Testing OsiColCut with OsiVolSolverInterface\n" );
+    OSIUNITTEST_CATCH_ERROR(OsiColCutUnitTest(&volSi,mpsDir), {}, "vol", "colcut unittest");
+  }
+
+  /*
+    Run the OsiVol class test, which calls the OsiSolverInterfaceCommonUnitTest.
+   */
+  testingMessage( "Testing OsiVolSolverInterface\n" );
+  OSIUNITTEST_CATCH_ERROR(OsiVolSolverInterfaceUnitTest(mpsDir,netlibDir), {}, "vol", "osivol unittest");
 
   /*
     We're done. Report on the results.
@@ -92,10 +83,8 @@ int main (int argc, const char *argv[])
 
   if (nerrors > nerrors_expected)
     std::cerr << "Tests completed with " << nerrors - nerrors_expected << " unexpected errors." << std::endl ;
-  else if( exception )
-    std::cerr << "Tests completed with exception\n";
   else
     std::cerr << "All tests completed successfully\n";
 
-  return (nerrors - nerrors_expected) + (exception ? 1 : 0);
+  return (nerrors - nerrors_expected);
 }
