@@ -4,17 +4,10 @@
 // $Id$
 
 #include "CoinPragma.hpp"
-#include "OsiConfig.h"
 
-#include <cstdio>
 #include <iostream>
 
 #include "OsiUnitTests.hpp"
-#include "OsiCuts.hpp"
-#include "OsiRowCutDebugger.hpp"
-
-#include "CoinError.hpp"
-
 #include "OsiVolSolverInterface.hpp"
 
 using namespace OsiUnitTest;
@@ -39,7 +32,6 @@ int main (int argc, const char *argv[])
   note at head of file.
   */
   WindowsErrorPopupBlocker();
-  outcomes.clear();
 
   /*
   Process command line parameters.

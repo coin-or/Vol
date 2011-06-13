@@ -6,14 +6,11 @@
 #include "OsiVolSolverInterface.hpp"
 
 //--------------------------------------------------------------------------
-int
-OsiVolSolverInterfaceUnitTest(const std::string & mpsDir, const std::string & netlibDir)
+void OsiVolSolverInterfaceUnitTest(const std::string & mpsDir, const std::string & netlibDir)
 {
-
   // Do common solverInterface testing
   {
     OsiVolSolverInterface m;
-    return OsiSolverInterfaceCommonUnitTest(&m, mpsDir,netlibDir);
+    OsiSolverInterfaceCommonUnitTest(&m, mpsDir,netlibDir);
   }
-
 }
