@@ -162,8 +162,8 @@ public:
    VOL_dvector(const VOL_dvector& x) : v(0), sz(0) {
       sz = x.sz;
       if (sz > 0) {
-	 v = new double[sz];
-	 std::copy(x.v, x.v + sz, v);
+        v = new double[sz];
+        std::memcpy(v, x.v, sz * sizeof(double));
       }
    }
    /** The destructor deletes the data array. */
