@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <cmath>
+#include <cstring>
 
 #ifndef VOL_DEBUG
 // When VOL_DEBUG is 1, we check vector indices
@@ -256,7 +257,7 @@ public:
       sz = x.sz;
       if (sz > 0) {
 	 v = new int[sz];
-	 std::copy(x.v, x.v + sz, v);
+	 std::memcpy(v, x.v, sz * sizeof(int));
       }
    }
    /** The destructor deletes the data array. */
