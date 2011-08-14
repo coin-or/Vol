@@ -37,8 +37,7 @@ libVol_la_LDFLAGS = $(LT_LDFLAGS)
 # being compiled.
 AM_CPPFLAGS = ${COINUTILS_CFLAGS}
 
-# This line is necessary to allow VPATH compilation with MS compilers
-# on Cygwin
+# This line is necessary to allow VPATH compilation
 DEFAULT_INCLUDES = -I. -I`$(CYGPATH_W) $(srcdir)` -I$(top_builddir)/inc
 
 ########################################################################
