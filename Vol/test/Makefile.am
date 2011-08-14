@@ -24,9 +24,10 @@ osiUnitTest_LDADD = ../src/OsiVol/libOsiVol.la ../src/libVol.la \
 osiUnitTest_DEPENDENCIES = ../src/OsiVol/libOsiVol.la ../src/libVol.la \
   $(OSITESTS_DEPENDENCIES) $(OSIVOLLIB_DEPENDENCIES) $(VOLLIB_DEPENDENCIES)
 
-AM_CPPFLAGS = $(COINUTILS_CFLAGS) $(OSI_CFLAGS) $(OSITESTS_CFLAGS) \
+AM_CPPFLAGS = \
 	-I`$(CYGPATH_W) $(srcdir)/../src` \
-	-I`$(CYGPATH_W) $(srcdir)/../src/OsiVol`
+	-I`$(CYGPATH_W) $(srcdir)/../src/OsiVol` \
+	$(COINUTILS_CFLAGS) $(OSI_CFLAGS) $(OSITESTS_CFLAGS)
 
 osiunittestflags =
 if COIN_HAS_SAMPLE
