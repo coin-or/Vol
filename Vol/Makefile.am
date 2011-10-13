@@ -94,7 +94,7 @@ if COIN_HAS_PKGCONFIG
 	$(PKG_CONFIG) --libs vol > $(addlibsdir)/vol_addlibs.txt
 else
 if COIN_CXX_IS_CL
-	echo "-libpath:`$(CYGPATH_W) @abs_lib_dir@` libVol.lib @VOLLIB_LIBS_INSTALLED@" > $(addlibsdir)/vol_addlibs_cpp.txt
+	echo "-libpath:`$(CYGPATH_W) @abs_lib_dir@` libVol.lib @VOLLIB_LIBS_INSTALLED@" > $(addlibsdir)/vol_addlibs.txt
 else
 	echo -L@abs_lib_dir@ -lVol @VOLLIB_LIBS_INSTALLED@ > $(addlibsdir)/vol_addlibs.txt
 endif
