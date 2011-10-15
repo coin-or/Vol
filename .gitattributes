@@ -10,9 +10,6 @@ Vol/MSVisualStudio/v10/OsiVolUnitTest/OsiVolUnitTest.vcxproj -text
 Vol/MSVisualStudio/v10/Vol.sln -text
 Vol/MSVisualStudio/v10/libOsiVol/libOsiVol.vcxproj -text
 Vol/MSVisualStudio/v10/libVol/libVol.vcxproj -text
-Vol/MSVisualStudio/v6/libVol/libVol.dsp -text
-Vol/MSVisualStudio/v7/libVol/libVol.vcproj -text
-Vol/MSVisualStudio/v8/libVol/libVol.vcproj -text
 Vol/MSVisualStudio/v9/OsiVolUnitTest/OsiVolUnitTest.vcproj -text
 Vol/MSVisualStudio/v9/Vol.sln -text
 Vol/MSVisualStudio/v9/libOsiVol/libOsiVol.vcproj -text
