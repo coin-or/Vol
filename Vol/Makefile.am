@@ -14,6 +14,11 @@ AUTOMAKE_OPTIONS = foreign
 
 SUBDIRS = src
 
+# Don't do src/OsiVol recursively, since src/OsiVol/libOsiVol depends on src/libVol
+if COIN_HAS_OSI
+SUBDIRS += src/OsiVol
+endif
+
 ########################################################################
 #             Additional files to be included in tarball               #
 ########################################################################

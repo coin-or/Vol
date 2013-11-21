@@ -20,6 +20,11 @@ libOsiVol_la_SOURCES = \
 	OsiVolSolverInterface.cpp OsiVolSolverInterface.hpp \
 	OsiVolSolverInterfaceIO.cpp
 
+# List all additionally required libraries
+if DEPENDENCY_LINKING
+libOsiVol_la_LIBADD = $(OSIVOLLIB_LIBS) ../libVol.la
+endif
+
 # This is for libtool (on Windows)
 libOsiVol_la_LDFLAGS = $(LT_LDFLAGS)
 
