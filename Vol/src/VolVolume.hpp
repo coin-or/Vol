@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <cmath>
 #include <cstring>
+#include <cstdlib>
 
 #ifndef VOL_DEBUG
 // When VOL_DEBUG is 1, we check vector indices
