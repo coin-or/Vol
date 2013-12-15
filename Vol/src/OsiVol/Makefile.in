@@ -63,7 +63,9 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includecoindir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libOsiVol_la_LIBADD =
+am__DEPENDENCIES_1 =
+@DEPENDENCY_LINKING_TRUE@libOsiVol_la_DEPENDENCIES =  \
+@DEPENDENCY_LINKING_TRUE@	$(am__DEPENDENCIES_1) ../libVol.la
 am_libOsiVol_la_OBJECTS = OsiVolSolverInterface.lo \
 	OsiVolSolverInterfaceIO.lo
 libOsiVol_la_OBJECTS = $(am_libOsiVol_la_OBJECTS)
@@ -307,6 +309,9 @@ libOsiVol_la_SOURCES = \
 	OsiVolSolverInterface.cpp OsiVolSolverInterface.hpp \
 	OsiVolSolverInterfaceIO.cpp
 
+
+# List all additionally required libraries
+@DEPENDENCY_LINKING_TRUE@libOsiVol_la_LIBADD = $(OSIVOLLIB_LIBS) ../libVol.la
 
 # This is for libtool (on Windows)
 libOsiVol_la_LDFLAGS = $(LT_LDFLAGS)

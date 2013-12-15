@@ -52,7 +52,10 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@COIN_HAS_OSI_TRUE@am__append_1 = osi-vol.pc
+
+# Don't do src/OsiVol recursively, since src/OsiVol/libOsiVol depends on src/libVol
+@COIN_HAS_OSI_TRUE@am__append_1 = src/OsiVol
+@COIN_HAS_OSI_TRUE@am__append_2 = osi-vol.pc
 DIST_COMMON = README $(am__configure_deps) \
 	$(srcdir)/BuildTools/Makemain.inc $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/vol-uninstalled.pc.in \
@@ -65,8 +68,8 @@ DIST_COMMON = README $(am__configure_deps) \
 	$(top_srcdir)/src/OsiVol/osi-vol-uninstalled.pc.in \
 	$(top_srcdir)/src/OsiVol/osi-vol.pc.in AUTHORS INSTALL \
 	config.guess config.sub depcomp install-sh ltmain.sh missing
-@HAVE_EXTERNALS_TRUE@am__append_2 = Dependencies
-@HAVE_EXTERNALS_TRUE@am__append_3 = .Dependencies-stamp
+@HAVE_EXTERNALS_TRUE@am__append_3 = Dependencies
+@HAVE_EXTERNALS_TRUE@am__append_4 = .Dependencies-stamp
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -99,7 +102,7 @@ pkgconfiglibDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(pkgconfiglib_DATA)
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = $(SUBDIRS)
+DIST_SUBDIRS = src src/OsiVol
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -317,7 +320,7 @@ AUTOMAKE_OPTIONS = foreign
 ########################################################################
 #                          Subdirectories                              #
 ########################################################################
-SUBDIRS = src
+SUBDIRS = src $(am__append_1)
 
 ########################################################################
 #             Additional files to be included in tarball               #
@@ -341,13 +344,13 @@ EXTRA_DIST = doc/ufldoc.bib doc/ufldoc.ps doc/ufldoc.tex \
 	examples/VolUfl/ufl.par examples/VolUfl/data.gz \
 	examples/VolUfl/ufl.hpp examples/VolLp/Makefile.in \
 	examples/VolLp/INSTALL examples/VolLp/vollp.cpp \
-	$(am__append_2)
+	$(am__append_3)
 
 ########################################################################
 #                  Installation of the addlibs file                    #
 ########################################################################
 pkgconfiglibdir = $(libdir)/pkgconfig
-pkgconfiglib_DATA = vol.pc $(am__append_1)
+pkgconfiglib_DATA = vol.pc $(am__append_2)
 addlibsdir = $(DESTDIR)$(datadir)/coin/doc/Vol
 
 ########################################################################
@@ -355,7 +358,7 @@ addlibsdir = $(DESTDIR)$(datadir)/coin/doc/Vol
 ########################################################################
 
 # Files that are generated and should be cleaned with make distclean
-DISTCLEANFILES = $(am__append_3) $(VPATH_DISTCLEANFILES)
+DISTCLEANFILES = $(am__append_4) $(VPATH_DISTCLEANFILES)
 DocFiles = README AUTHORS LICENSE
 DocInstallDir = $(datadir)/coin/doc/$(PACKAGE_NAME)
 all: all-recursive
