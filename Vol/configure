@@ -1956,14 +1956,6 @@ echo "$as_me: error: --enable-msvc option makes sense only under Cygwin or MinGW
 
 
 
-  if test "$enable_msvc" = yes; then
-    case $build in
-      *-cygwin* | *-mingw*) ;;
-      *) { { echo "$as_me:$LINENO: error: --enable-msvc option makes sense only under Cygwin or MinGW" >&5
-echo "$as_me: error: --enable-msvc option makes sense only under Cygwin or MinGW" >&2;}
-   { (exit 1); exit 1; }; } ;;
-    esac
-  fi
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
