@@ -1,4 +1,5 @@
 * text=auto !eol
+/.travis.yml -text
 /AUTHORS -text
 /Dependencies -text
 /LICENSE -text
@@ -61,6 +62,7 @@ Vol/test/OsiVolSolverInterfaceTest.cpp -text
 Vol/test/osiUnitTest.cpp -text
 Vol/vol-uninstalled.pc.in -text
 Vol/vol.pc.in -text
+/appveyor.yml -text
 /config.guess -text
 /config.sub -text
 /configure -text
