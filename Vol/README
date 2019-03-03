@@ -60,3 +60,29 @@ If `Doxygen` is not available, you can use the link to the {{{Vol}}} html docume
  * [Solving Steiner Tree Problems in Graphs with Lagrangian Relaxation](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/4a61544906b57a6d8525696c0057f955?OpenDocument&Highlight=0,barahona)
  * [Vol html documentation](http://www.coin-or.org/Doxygen/Vol/hierarchy.html)
  * [COIN-OR Initiative](http://www.coin-or.org/)
+
+## FAQ
+
+### For what type of problems has VOL been used?
+
+It has been tested with a variety of combinatorial problems like: Crew scheduling, Fleet assignment, Facility location, Steiner trees, Max-Cut, Quadratic knapsack.
+
+### Can one solve a linear program with VOL?
+
+One can get good and fast approximate solutions for combinatorial linear programs. These are LP's where all variables are between 0 and 1.
+
+### Can one solve integer programs with VOL?
+VOL gives bounds based on a relaxation of the IP. It also gives primal (fractional) solutions. With this information one can run a heuristic to produce an integer solution, or one can imbed VOL in a branch and bound code.
+
+### Can one do "branch and cut" with VOL?
+Yes, as an example, there is an implementation of a cutting plane algorithm for the Max-cut problem, that combines BCP and Vol. 
+
+### Can one use VOL for column generation?
+Yes. VOL has been very useful for accelerating column generation procedures, in particular for Crew Scheduling. The dual solutions given by VOL seem to provide faster convergence than if one uses dual solutions given by the Simplex method.
+
+### What platforms does VOL run on?
+
+VOL has been tested on:
+ * AIX V4.3 using g++ V2.95.2
+ * Linux using g++ V2.95.2.
+ * Solaris (SunOS 5.6 and 5.8) using g++ V2.95.2
