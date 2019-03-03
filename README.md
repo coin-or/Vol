@@ -52,7 +52,7 @@ If `Doxygen` is not available, you can use the link to the {{{Vol}}} html docume
 
 ## Documentation
 
- * [Overview of different directories](https://projects.coin-or.org/Vol/attachment/wiki/WikiStart/volDoc.pdf?format=raw)
+ * [Overview of different directories](Vol/doc/volDoc.pdf)
  * [The Volume Algorithm: Producing Primal Solutions With a Subgradient Method](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/7a1b25774639540a852565be0070cfb5?OpenDocument)
  * [On Some Difficult Linear Programs Coming from Set Partitioning](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/53731ca97769f3838525672f0070dc2b?OpenDocument)
  * [Solving Large Scale Uncapacitated Facility Location Problems](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/08e1ac62bb877f9a852567b500500996?OpenDocument)
