@@ -4,6 +4,7 @@
 // This code is licensed under the terms of the Eclipse Public License (EPL).
 
 #include "OsiVolSolverInterface.hpp"
+#include "OsiUnitTests.hpp"
 
 //--------------------------------------------------------------------------
 void OsiVolSolverInterfaceUnitTest(const std::string & mpsDir, const std::string & netlibDir)
