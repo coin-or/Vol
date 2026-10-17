@@ -9,6 +9,7 @@
 
 #include <string>
 
+#include "OsiVolConfig.h"
 #include "VolVolume.hpp"
 
 #include "CoinPackedMatrix.hpp"
@@ -24,7 +25,7 @@ static const double OsiVolInfinity = 1.0e31;
     Instantiation of OsiVolSolverInterface for the Volume Algorithm
 */
 
-class OsiVolSolverInterface :
+class OSIVOLLIB_EXPORT OsiVolSolverInterface :
    virtual public OsiSolverInterface, public VOL_user_hooks {
    friend void OsiVolSolverInterfaceUnitTest(const std::string & mpsDir, const std::string & netlibDir);
 

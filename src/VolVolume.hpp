@@ -6,6 +6,8 @@
 #ifndef __VOLUME_HPP__
 #define __VOLUME_HPP__
 
+#include "VolConfig.h"
+
 #include <cfloat>
 #include <algorithm>
 #include <cstdio>
@@ -68,7 +70,7 @@ class VOL_problem;
 /**
    This class contains the parameters controlling the Volume Algorithm 
 */
-struct VOL_parms {
+struct VOLLIB_EXPORT VOL_parms {
    /** initial value of lambda */
    double lambdainit; 
    /** initial value of alpha */
@@ -145,7 +147,7 @@ struct VOL_parms {
     good to turn this on while debugging, but in final runs it should be
     turned off (beause of the performance hit).
 */
-class VOL_dvector {
+class VOLLIB_EXPORT VOL_dvector {
 public:
    /** The array holding the vector */
    double* v;
@@ -239,7 +241,7 @@ public:
     good to turn this on while debugging, but in final runs it should be
     turned off (beause of the performance hit).
 */
-class VOL_ivector {
+class VOLLIB_EXPORT VOL_ivector {
 public:
    /** The array holding the vector. */
    int* v;
@@ -310,7 +312,7 @@ public:
 
 //############################################################################
 // A class describing a primal solution. This class is used only internally 
-class VOL_primal {
+class VOLLIB_EXPORT VOL_primal {
 public: 
    // objective value of this primal solution 
    double value;
@@ -351,7 +353,7 @@ public:
 
 //-----------------------------------------------------------------------------
 // A class describing a dual solution. This class is used only internally 
-class VOL_dual {
+class VOLLIB_EXPORT VOL_dual {
 public:
    // lagrangian value
    double lcost; 
@@ -387,7 +389,7 @@ public:
 //############################################################################
 /* here we check whether an iteration is green, yellow or red. Also according
    to this information we decide whether lambda should be changed */
-class VOL_swing {
+class VOLLIB_EXPORT VOL_swing {
 private:
    VOL_swing(const VOL_swing&);
    VOL_swing& operator=(const VOL_swing&);
@@ -486,7 +488,7 @@ public:
 //############################################################################
 /* alpha should be decreased if after some number of iterations the objective
    has increased less that 1% */
-class VOL_alpha_factor {
+class VOLLIB_EXPORT VOL_alpha_factor {
 private:
    VOL_alpha_factor(const VOL_alpha_factor&);
    VOL_alpha_factor& operator=(const VOL_alpha_factor&);
@@ -512,7 +514,7 @@ public:
    subgradient -norm-, the inner product between the subgradient and the 
    last conjugate direction -vh-, and the inner product between the new
    conjugate direction and the subgradient */
-class VOL_vh {
+class VOLLIB_EXPORT VOL_vh {
 private:
    VOL_vh(const VOL_vh&);
    VOL_vh& operator=(const VOL_vh&);
@@ -535,7 +537,7 @@ public:
    variables and the subgradient. vabs is the maximum absolute value of
    the violations of pstar. asc is the inner product between the conjugate
    direction and the subgradient */
-class VOL_indc {
+class VOLLIB_EXPORT VOL_indc {
 private:
    VOL_indc(const VOL_indc&);
    VOL_indc& operator=(const VOL_indc&);
@@ -560,7 +562,7 @@ public:
 
     for all hooks: return value of -1 means that volume should quit
 */
-class VOL_user_hooks {
+class VOLLIB_EXPORT VOL_user_hooks {
 public:
    virtual ~VOL_user_hooks() {}
 public:
@@ -602,7 +604,7 @@ public:
     last argument to <code>solve</code> is <code>true</code>.
 */
 
-class VOL_problem {
+class VOLLIB_EXPORT VOL_problem {
 private:
    VOL_problem(const VOL_problem&);
    VOL_problem& operator=(const VOL_problem&);
