@@ -1,12 +1,15 @@
-prefix=@prefix@
+@COIN_RELOCATABLE_FALSE@prefix=@prefix@
+@COIN_RELOCATABLE_TRUE@prefix=${pcfiledir}/../..
 exec_prefix=@exec_prefix@
 libdir=@libdir@
-includedir=@includedir@/coin
+includedir=@includedir@/coin-or
 
 Name: OsiVol
 Description: COIN-OR Open Solver Interface for Vol
-URL: https://projects.coin-or.org/Osi
+URL: @PACKAGE_URL@
 Version: @PACKAGE_VERSION@
-Libs: -L${libdir} -lOsiVol @OSIVOLLIB_PCLIBS@
 Cflags: -I${includedir}
-Requires: vol @OSIVOLLIB_PCREQUIRES@
+@COIN_STATIC_BUILD_FALSE@Libs: -L${libdir} -lOsiVol
+@COIN_STATIC_BUILD_FALSE@Requires.private: @OSIVOLLIB_PCFILES@
+@COIN_STATIC_BUILD_TRUE@Libs: -L${libdir} -lOsiVol @OSIVOLLIB_LFLAGS_NOPC@
+@COIN_STATIC_BUILD_TRUE@Requires: @OSIVOLLIB_PCFILES@

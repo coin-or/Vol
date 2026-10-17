@@ -1,12 +1,15 @@
-prefix=@prefix@
+@COIN_RELOCATABLE_FALSE@prefix=@prefix@
+@COIN_RELOCATABLE_TRUE@prefix=${pcfiledir}/../..
 exec_prefix=@exec_prefix@
 libdir=@libdir@
-includedir=@includedir@/coin
+includedir=@includedir@/coin-or
 
-Name: Vol
+Name: @PACKAGE_NAME@
 Description: Volume Algorithm
-URL: https://projects.coin-or.org/Vol
+URL: @PACKAGE_URL@
 Version: @PACKAGE_VERSION@
-Libs: -L${libdir} -lVol @VOLLIB_PCLIBS@
 Cflags: -I${includedir}
-Requires: @VOLLIB_PCREQUIRES@
+@COIN_STATIC_BUILD_FALSE@Libs: -L${libdir} -lVol
+@COIN_STATIC_BUILD_FALSE@Requires.private: @VOLLIB_PCFILES@
+@COIN_STATIC_BUILD_TRUE@Libs: -L${libdir} -lVol @VOLLIB_LFLAGS_NOPC@
+@COIN_STATIC_BUILD_TRUE@Requires: @VOLLIB_PCFILES@
