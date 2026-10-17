@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+# Exit when command fails
+set -e
+#Attempt to use undefined variable outputs error message, and forces an exit
+set -u
+#Causes a pipeline to return the exit status of the last command in the pipe
+#that returned a non-zero return value.
+set -o pipefail
+#set -x
+
+source $COINBREW_HOME/scripts/generate_readme
+
+pushd . > /dev/null
+cd $(dirname $0)
+SCRIPT_DIR=$PWD
+popd > /dev/null
+
+create_variables $SCRIPT_DIR/config.yml
+
+make_header
+
+echo "Vol (Volume Algorithm) is an open-source implementation of a subgradient
+method that produces primal as well as dual solutions. The primal solution
+comes from estimating the volumes below the faces of the dual problem. This is
+an approximate method so the primal vector might have small infeasiblities
+that are negligible in many practical settings. The original subgradient
+algorithm produces only dual solutions.
+
+Vol consists of the library \`libVol\`, which implements the Volume Algorithm,
+and \`libOsiVol\`, an [Osi](https://github.com/coin-or/Osi) interface to it."
+
+# There are no FreeBSD, linuxbrew, or conda packages for Vol, and the Debian
+# package is called coinor-libvol-dev only.
+make_build_info no_conda | awk '
+  /^   \* freebsd:/ || /^   \* linuxbrew:/ { skip = 1; fences = 0; next }
+  skip { if (/```/ && ++fences == 2) skip = 0; next }
+  { print }' | sed 's/coinor-vol coinor-libvol-dev/coinor-libvol-dev/'
+
+echo "### Examples
+
+The \`examples\` directory has three applications of Vol:
+ * \`VolUfl\`: uncapacitated facility location,
+ * \`Volume-LP\`: approximate solutions of linear programs,
+ * \`VolLp\`: approximate solutions of linear programs read from MPS files.
+
+After building and installing Vol, the examples can be built by running
+\`make\` in the corresponding subdirectory of the build directory, e.g.,
+\`\`\`
+cd build/Vol/master/examples/VolUfl
+make
+./ufl
+\`\`\`
+"
+
+make_doxygen_info
+
+echo "## Documentation
+
+ * [Overview of different directories](doc/volDoc.pdf)
+ * [The Volume Algorithm: Producing Primal Solutions With a Subgradient Method](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/7a1b25774639540a852565be0070cfb5?OpenDocument)
+ * [On Some Difficult Linear Programs Coming from Set Partitioning](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/53731ca97769f3838525672f0070dc2b?OpenDocument)
+ * [Solving Large Scale Uncapacitated Facility Location Problems](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/08e1ac62bb877f9a852567b500500996?OpenDocument)
+ * [Near-Optimal Solutions to Large Scale Facility Location Problems](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/215bca4e7e2406ec852568430076860c?OpenDocument)
+ * [Solving Steiner Tree Problems in Graphs with Lagrangian Relaxation](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/4a61544906b57a6d8525696c0057f955?OpenDocument&Highlight=0,barahona)
+
+## FAQ
+
+### For what type of problems has Vol been used?
+
+It has been tested with a variety of combinatorial problems like: Crew
+scheduling, Fleet assignment, Facility location, Steiner trees, Max-Cut,
+Quadratic knapsack.
+
+### Can one solve a linear program with Vol?
+
+One can get good and fast approximate solutions for combinatorial linear
+programs. These are LP's where all variables are between 0 and 1.
+
+### Can one solve integer programs with Vol?
+
+Vol gives bounds based on a relaxation of the IP. It also gives primal
+(fractional) solutions. With this information one can run a heuristic to
+produce an integer solution, or one can imbed Vol in a branch and bound code.
+
+### Can one do \"branch and cut\" with Vol?
+
+Yes, as an example, there is an implementation of a cutting plane algorithm
+for the Max-cut problem, that combines [Bcp](https://github.com/coin-or/Bcp)
+and Vol.
+
+### Can one use Vol for column generation?
+
+Yes. Vol has been very useful for accelerating column generation procedures,
+in particular for Crew Scheduling. The dual solutions given by Vol seem to
+provide faster convergence than if one uses dual solutions given by the
+Simplex method.
+"
+
+make_links

@@ -1,0 +1,52 @@
+Description:
+  Slug: Vol
+  ShortName: Vol
+  LongName: Volume Algorithm
+  ShortDescription: A subgradient algorithm that also computes approximate primal solutions.
+  LongDescription: |2
+    Vol (Volume Algorithm) is an open-source implementation of a subgradient
+    method that produces primal as well as dual solutions. The primal solution
+    comes from estimating the volumes below the faces of the dual problem. This
+    is an approximate method so the primal vector might have small
+    infeasiblities that are negligible in many practical settings. The original
+    subgradient algorithm produces only dual solutions.
+  Manager: Francisco Barahona
+  Homepage: https://github.com/coin-or/Vol
+  License: Eclipse Public License 2.0
+  LicenseURL: http://www.opensource.org/licenses/EPL-2.0
+  Zenodo:
+  IncludedIn:
+    Package: Vol
+  Language:
+    - C++
+  Categories:
+    - Optimization deterministic linear continuous
+
+Dependencies:
+  - Description: Sample data files
+    URL: https://github.com/coin-or-tools/Data-Sample
+    Version: 1.2
+    Required: Recommended
+  - Description: COIN-OR Utilities
+    URL: https://github.com/coin-or/CoinUtils
+    Version: master
+    Required: Required
+  - Description: Open Solver Interface
+    URL: https://github.com/coin-or/Osi
+    Version: master
+    Required: Recommended
+
+DevelopmentStatus:
+  activityStatus: Active
+  maturityLevel: 3
+  testedPlatforms:
+  - operatingSystem: Linux
+    compiler: gcc
+  - operatingSystem: Mac OS X
+    compiler:
+    - gcc
+    - clang
+  - operatingSystem: Microsoft Windows with MSys2
+    compiler:
+    - gcc
+    - cl
