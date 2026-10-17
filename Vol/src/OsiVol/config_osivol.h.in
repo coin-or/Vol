@@ -1,0 +1,9 @@
+/* src/OsiVol/config_osivol.h.in.  */
+
+#ifndef __CONFIG_OSIVOL_H__
+#define __CONFIG_OSIVOL_H__
+
+/* Library Visibility Attribute */
+#undef OSIVOLLIB_EXPORT
+
+#endif

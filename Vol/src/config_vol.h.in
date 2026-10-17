@@ -1,0 +1,21 @@
+/* src/config_vol.h.in.  */
+
+#ifndef __CONFIG_VOL_H__
+#define __CONFIG_VOL_H__
+
+/* Library Visibility Attribute */
+#undef VOLLIB_EXPORT
+
+/* Version number of project */
+#undef VOL_VERSION
+
+/* Major version number of project. */
+#undef VOL_VERSION_MAJOR
+
+/* Minor version number of project. */
+#undef VOL_VERSION_MINOR
+
+/* Release version number of project. */
+#undef VOL_VERSION_RELEASE
+
+#endif
