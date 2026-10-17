@@ -30,10 +30,10 @@ algorithm produces only dual solutions.
 Vol consists of the library \`libVol\`, which implements the Volume Algorithm,
 and \`libOsiVol\`, an [Osi](https://github.com/coin-or/Osi) interface to it."
 
-# There are no FreeBSD, linuxbrew, or conda packages for Vol, and the Debian
-# package is called coinor-libvol-dev only.
+# There are no FreeBSD, linuxbrew, or conda packages for Vol, the Arch package
+# is only in the AUR, and the Debian package is called coinor-libvol-dev only.
 make_build_info no_conda | awk '
-  /^   \* freebsd:/ || /^   \* linuxbrew:/ { skip = 1; fences = 0; next }
+  /^   \* arch:/ || /^   \* freebsd:/ || /^   \* linuxbrew:/ { skip = 1; fences = 0; next }
   skip { if (/```/ && ++fences == 2) skip = 0; next }
   { print }' | sed 's/coinor-vol coinor-libvol-dev/coinor-libvol-dev/'
 
