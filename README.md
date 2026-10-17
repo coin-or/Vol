@@ -57,10 +57,6 @@ are archived as part of Vol
 [here](https://www.coin-or.org/download/binary/Vol).
 
  * *Linux* (see https://repology.org/project/coin-or-vol/versions for a complete listing): 
-   * arch:
-     ```
-     $ sudo pacman -S  coin-or-vol
-     ```
    * Debian/Ubuntu:
      ```
      $ sudo apt-get install  coinor-libvol-dev
