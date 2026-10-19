@@ -60,11 +60,11 @@ make_doxygen_info
 echo "## Documentation
 
  * [Overview of different directories](doc/volDoc.pdf)
- * [The Volume Algorithm: Producing Primal Solutions With a Subgradient Method](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/7a1b25774639540a852565be0070cfb5?OpenDocument)
- * [On Some Difficult Linear Programs Coming from Set Partitioning](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/53731ca97769f3838525672f0070dc2b?OpenDocument)
- * [Solving Large Scale Uncapacitated Facility Location Problems](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/08e1ac62bb877f9a852567b500500996?OpenDocument)
- * [Near-Optimal Solutions to Large Scale Facility Location Problems](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/215bca4e7e2406ec852568430076860c?OpenDocument)
- * [Solving Steiner Tree Problems in Graphs with Lagrangian Relaxation](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/4a61544906b57a6d8525696c0057f955?OpenDocument&Highlight=0,barahona)
+ * The Volume Algorithm: Producing Primal Solutions With a Subgradient Method
+ * On Some Difficult Linear Programs Coming from Set Partitioning
+ * Solving Large Scale Uncapacitated Facility Location Problems
+ * Near-Optimal Solutions to Large Scale Facility Location Problems
+ * Solving Steiner Tree Problems in Graphs with Lagrangian Relaxation
 
 ## FAQ
 
