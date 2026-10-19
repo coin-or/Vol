@@ -18,6 +18,13 @@ popd > /dev/null
 
 create_variables $SCRIPT_DIR/config.yml
 
+# Binary packages of this project that make_build_info lists (see
+# make_binary_packages in coinbrew's scripts/generate_readme)
+Package_Repology="coin-or-vol"
+Package_Debian="coinor-libvol-dev"
+Package_Fedora="coin-or-Vol coin-or-Vol-devel"
+Package_Homebrew="vol"
+
 make_header
 
 echo "Vol (Volume Algorithm) is an open-source implementation of a subgradient
@@ -30,12 +37,7 @@ algorithm produces only dual solutions.
 Vol consists of the library \`libVol\`, which implements the Volume Algorithm,
 and \`libOsiVol\`, an [Osi](https://github.com/coin-or/Osi) interface to it."
 
-# There are no FreeBSD, linuxbrew, or conda packages for Vol, the Arch package
-# is only in the AUR, and the Debian package is called coinor-libvol-dev only.
-make_build_info no_conda | awk '
-  /^   \* arch:/ || /^   \* freebsd:/ || /^   \* linuxbrew:/ { skip = 1; fences = 0; next }
-  skip { if (/```/ && ++fences == 2) skip = 0; next }
-  { print }' | sed 's/coinor-vol coinor-libvol-dev/coinor-libvol-dev/'
+make_build_info
 
 echo "### Examples
 
