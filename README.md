@@ -46,7 +46,7 @@ available [here](https://coin-or.github.io/user_introduction.html).
 
 There is a Docker image that provides Vol, as well as other projects
 in the [COIN-OR Optimization
-Suite](https://github.com/coin-or/COIN-OR-OptimizationSuite) [here](https://hub.docker.com/repository/docker/coinor/coin-or-optimization-suite)
+Suite](https://github.com/coin-or/COIN-OR-OptimizationSuite) [here](https://hub.docker.com/r/coinor/coin-or-optimization-suite).
 
 ### Binaries
 
@@ -56,21 +56,30 @@ releases in Github
 are archived as part of Vol
 [here](https://www.coin-or.org/download/binary/Vol).
 
- * *Linux* (see https://repology.org/project/coin-or-vol/versions for a complete listing): 
-   * Debian/Ubuntu:
+ * *Linux* (see https://repology.org/project/coin-or-vol/versions for a complete listing):
+   * Debian and Ubuntu:
      ```
-     $ sudo apt-get install  coinor-libvol-dev
+     sudo apt install coinor-libvol-dev
      ```
-   * Fedora/Redhat/CentOS:
+   * Fedora:
      ```
-     $ sudo dnf install  coin-or-Vol coin-or-Vol-devel
+     sudo dnf install coin-or-Vol coin-or-Vol-devel
      ```
+ * *macOS and Linux*: With [Homebrew](https://brew.sh), from the
+   [COIN-OR tap](https://github.com/coin-or-tools/homebrew-coinor), do
+   ```
+   brew update
+   brew tap coin-or-tools/coinor
+   brew trust coin-or-tools/coinor
+   brew install coin-or-tools/coinor/vol
+   ```
+   Since version 6.0, Homebrew loads formulas from taps other than its own
+   only if you trust them. `brew trust coin-or-tools/coinor` trusts all
+   formulas of the COIN-OR tap. This is needed because installing a formula by
+   its full name trusts only that formula, not the other formulas of the tap
+   that it depends on. `brew update` makes sure that your Homebrew is recent
+   enough to have the `brew trust` command.
  * *Windows*: The easiest way to get Vol on Windows is to download an archive as described above.
- * *Mac OS X*: The easiest way to get Vol on Mac OS X is through [Homebrew](https://brew.sh).
-     ```
-     $ brew tap coin-or-tools/coinor
-     $ brew install coin-or-tools/coinor/vol
-     ```
 
 Due to license incompatibilities, pre-compiled binaries lack some 
 functionality. If binaries are not available for your platform for the latest 
@@ -93,7 +102,7 @@ Vol has a number of dependencies, which are detailed in
 automatically downloaded when obtaining the source with `coinbrew`. For some
 of the remaining third-party dependencies, automatic download scripts and
 build wrappers are provided (and will also be automatically run for required
-and recommended dependencies), while other libraries that are aeasy to obtain
+and recommended dependencies), while other libraries that are easy to obtain
 must be installed using an appropriate package manager (or may come with your
 OS by default). 
 
@@ -118,7 +127,7 @@ The `coinbrew` script will fetch the additional projects specified in the Depend
 
  * Download the source code, e.g., by cloning the git repo https://github.com/coin-or/Vol
  * Download and install the source code for the dependencies listed in [config.yml](.coin-or/config.yml)
- * Build the code as follows (make sure to set PKG_CONFIG_PTH to install directory for dependencies).
+ * Build the code as follows (make sure to set `PKG_CONFIG_PATH` to the `lib/pkgconfig` directory of the installation of the dependencies).
 
 ```
 ./configure -C
@@ -146,23 +155,20 @@ make
 
 If you have `Doxygen` available, you can build a HTML documentation by typing
 
-`make doxydoc` 
+`make doxygen-docs` 
 
 in the build directory. If Vol was built via `coinbrew`, then the build
 directory will be `./build/Vol/1.5` by default. The doxygen documentation main file
 is found at `<build-dir>/doxydoc/html/index.html`.
 
-If you don't have `doxygen` installed locally, you can use also find the
-documentation [here](http://coin-or.github.io/Vol/Doxygen).
-
 ## Documentation
 
  * [Overview of different directories](Vol/doc/volDoc.pdf)
- * [The Volume Algorithm: Producing Primal Solutions With a Subgradient Method](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/7a1b25774639540a852565be0070cfb5?OpenDocument)
- * [On Some Difficult Linear Programs Coming from Set Partitioning](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/53731ca97769f3838525672f0070dc2b?OpenDocument)
- * [Solving Large Scale Uncapacitated Facility Location Problems](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/08e1ac62bb877f9a852567b500500996?OpenDocument)
- * [Near-Optimal Solutions to Large Scale Facility Location Problems](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/215bca4e7e2406ec852568430076860c?OpenDocument)
- * [Solving Steiner Tree Problems in Graphs with Lagrangian Relaxation](http://domino.watson.ibm.com/library/cyberdig.nsf/a3807c5b4823c53f85256561006324be/4a61544906b57a6d8525696c0057f955?OpenDocument&Highlight=0,barahona)
+ * The Volume Algorithm: Producing Primal Solutions With a Subgradient Method
+ * On Some Difficult Linear Programs Coming from Set Partitioning
+ * Solving Large Scale Uncapacitated Facility Location Problems
+ * Near-Optimal Solutions to Large Scale Facility Location Problems
+ * Solving Steiner Tree Problems in Graphs with Lagrangian Relaxation
 
 ## FAQ
 
@@ -204,5 +210,4 @@ Simplex method.
  * [COIN-OR general discussion forum](https://github.com/orgs/coin-or/discussions)
  * [Vol Discussion forum](https://github.com/coin-or/Vol/discussions)
  * [Report a bug](https://github.com/coin-or/Vol/issues/new)
- * [Doxygen generated documentation](http://coin-or.github.io/Vol/Doxygen)
 
